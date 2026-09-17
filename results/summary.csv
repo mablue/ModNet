@@ -1,0 +1,7 @@
+problem,desc,kind,n_in,n_out,steps,max_gens,gens_run,best_fit,rmse,accuracy,size,cross,rec,wires,mods,time
+xor2,2-bit XOR,boolean,2,1,4,400,5,-0.000000,0.000000,1.0000,19,22,0,32,"[6, 6, 6, 1]",0.1
+parity4,Parity of 4 bits,boolean,4,1,6,800,118,-0.000000,0.000000,1.0000,19,68,5,93,"[6, 6, 6, 1]",2.6
+parity6,Parity of 6 bits,boolean,6,1,8,1500,1499,-0.062500,0.250000,0.9375,11,60,7,80,"[4, 2, 3, 2]",39.2
+sin2pi,sin(2*pi*x),regression,4,8,5,1500,1499,-0.001927,0.043897,,30,291,11,380,"[7, 6, 8, 9]",62.0
+sin4pi,sin(4*pi*x),regression,4,8,6,1500,1499,-0.005466,0.073930,,16,109,12,180,"[2, 4, 2, 8]",39.8
+circle,x^2 + y^2,regression,8,8,6,1200,559,-0.000464,0.021535,,23,121,5,173,"[5, 6, 3, 9]",15.7

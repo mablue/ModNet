@@ -1,0 +1,222 @@
+============================================================
+NETWORK - final
+============================================================
+fitness: -0.005466
+total nodes: 16   modules: [2, 4, 2, 8]
+active wires: 180/256   cross-module: 109   recursive: 12
+output module: 3   output nodes: [np.int32(8), np.int32(9), np.int32(10), np.int32(11), np.int32(12), np.int32(13), np.int32(14), np.int32(15)]
+
+MODULE ASSIGNMENT:
+  M0: n0 n1
+  M1: n2 n3 n4 n5
+  M2: n6 n7
+  M3 [OUTPUT]: n8 n9 n10 n11 n12 n13 n14 n15
+
+INPUT WIRES (in_k -> node, weight):
+  n 0 <- in0(+0.40), in1(+1.01), in2(-0.40), in3(+0.97)   bias=+2.136
+  n 1 <- in1(-0.16), in2(-0.06), in3(-0.93)   bias=+1.169
+  n 2 <- in0(-0.35), in1(-0.17), in2(-0.51), in3(+0.45)   bias=-0.758
+  n 3 <- in0(-0.35), in1(+0.65), in2(+0.13)   bias=-0.167
+  n 4 <- in0(+0.06), in2(-1.39), in3(-0.81)   bias=+0.658
+  n 5 <- in0(+0.50), in1(+0.43), in2(+1.20), in3(-0.06)   bias=+1.919
+  n 6 <- in0(+1.69), in1(+0.25), in2(-0.97), in3(-2.45)   bias=-1.958
+  n 7 <- in1(+0.79), in3(+0.21)   bias=-1.010
+  n 8 <- in1(-0.50), in2(-0.09), in3(+0.17)   bias=-0.343
+  n 9 <- in0(-0.13), in1(+0.53), in2(+0.26)   bias=-2.039
+  n10 <- in0(-0.47), in1(-0.11), in2(+1.37), in3(-0.15)   bias=+0.014
+  n11 <- in0(+0.71), in2(+0.62), in3(+0.29)   bias=-1.805
+  n12 <- in0(+0.41), in1(-0.32)   bias=-0.757
+  n13 <- in0(+0.17), in1(-0.28), in2(+0.11)   bias=-0.802
+  n14 <- in0(-0.27), in1(-1.77), in2(-0.73), in3(+0.52)   bias=+3.553
+  n15 <- in0(+1.26), in1(-0.17), in2(-5.54)   bias=-0.213
+
+INTERNAL WIRES (source -> target, weight):
+  n 0 -> n 0   w=-0.211 [RECURSIVE]
+  n 1 -> n 0   w=-0.270
+  n 2 -> n 0   w=-1.156 [CROSS M1->M0]
+  n 3 -> n 0   w=+0.093 [CROSS M1->M0]
+  n 4 -> n 0   w=-0.083 [CROSS M1->M0]
+  n 5 -> n 0   w=-0.756 [CROSS M1->M0]
+  n 6 -> n 0   w=-1.579 [CROSS M2->M0]
+  n 9 -> n 0   w=-0.230 [CROSS M3->M0]
+  n10 -> n 0   w=-1.774 [CROSS M3->M0]
+  n11 -> n 0   w=+0.317 [CROSS M3->M0]
+  n12 -> n 0   w=-0.424 [CROSS M3->M0]
+  n13 -> n 0   w=-0.283 [CROSS M3->M0]
+  n15 -> n 0   w=+0.436 [CROSS M3->M0]
+  n 2 -> n 1   w=+0.436 [CROSS M1->M0]
+  n 3 -> n 1   w=-1.391 [CROSS M1->M0]
+  n 4 -> n 1   w=-0.172 [CROSS M1->M0]
+  n 5 -> n 1   w=+0.120 [CROSS M1->M0]
+  n 6 -> n 1   w=+1.929 [CROSS M2->M0]
+  n11 -> n 1   w=+0.377 [CROSS M3->M0]
+  n12 -> n 1   w=-0.382 [CROSS M3->M0]
+  n15 -> n 1   w=+0.298 [CROSS M3->M0]
+  n 2 -> n 2   w=+0.401 [RECURSIVE]
+  n 3 -> n 2   w=-0.468
+  n 4 -> n 2   w=+0.181
+  n 5 -> n 2   w=+0.155
+  n 6 -> n 2   w=+1.302 [CROSS M2->M1]
+  n 8 -> n 2   w=+0.501 [CROSS M3->M1]
+  n 9 -> n 2   w=-0.216 [CROSS M3->M1]
+  n11 -> n 2   w=+0.338 [CROSS M3->M1]
+  n 2 -> n 3   w=+0.422
+  n 4 -> n 3   w=-0.423
+  n 6 -> n 3   w=+0.416 [CROSS M2->M1]
+  n 7 -> n 3   w=-1.166 [CROSS M2->M1]
+  n 8 -> n 3   w=+0.611 [CROSS M3->M1]
+  n 9 -> n 3   w=-0.704 [CROSS M3->M1]
+  n11 -> n 3   w=-0.095 [CROSS M3->M1]
+  n13 -> n 3   w=+0.088 [CROSS M3->M1]
+  n14 -> n 3   w=+0.093 [CROSS M3->M1]
+  n 1 -> n 4   w=+0.713 [CROSS M0->M1]
+  n 2 -> n 4   w=-0.442
+  n 3 -> n 4   w=-0.373
+  n 4 -> n 4   w=+0.131 [RECURSIVE]
+  n 5 -> n 4   w=-0.197
+  n 7 -> n 4   w=-0.129 [CROSS M2->M1]
+  n 8 -> n 4   w=-0.216 [CROSS M3->M1]
+  n 9 -> n 4   w=+0.305 [CROSS M3->M1]
+  n12 -> n 4   w=+0.233 [CROSS M3->M1]
+  n13 -> n 4   w=-0.249 [CROSS M3->M1]
+  n14 -> n 4   w=+0.171 [CROSS M3->M1]
+  n15 -> n 4   w=+0.158 [CROSS M3->M1]
+  n 2 -> n 5   w=-1.450
+  n 3 -> n 5   w=+0.150
+  n 5 -> n 5   w=+0.769 [RECURSIVE]
+  n 7 -> n 5   w=+0.960 [CROSS M2->M1]
+  n 8 -> n 5   w=-1.280 [CROSS M3->M1]
+  n 9 -> n 5   w=+2.037 [CROSS M3->M1]
+  n11 -> n 5   w=+1.162 [CROSS M3->M1]
+  n12 -> n 5   w=-0.300 [CROSS M3->M1]
+  n14 -> n 5   w=+0.807 [CROSS M3->M1]
+  n15 -> n 5   w=+1.735 [CROSS M3->M1]
+  n 1 -> n 6   w=-0.356 [CROSS M0->M2]
+  n 2 -> n 6   w=+0.920 [CROSS M1->M2]
+  n 5 -> n 6   w=-0.369 [CROSS M1->M2]
+  n 6 -> n 6   w=-0.311 [RECURSIVE]
+  n 8 -> n 6   w=-2.425 [CROSS M3->M2]
+  n 9 -> n 6   w=-0.083 [CROSS M3->M2]
+  n10 -> n 6   w=-0.238 [CROSS M3->M2]
+  n12 -> n 6   w=-0.177 [CROSS M3->M2]
+  n13 -> n 6   w=+1.610 [CROSS M3->M2]
+  n 0 -> n 7   w=-0.131 [CROSS M0->M2]
+  n 1 -> n 7   w=+0.269 [CROSS M0->M2]
+  n 3 -> n 7   w=-0.322 [CROSS M1->M2]
+  n 4 -> n 7   w=-0.299 [CROSS M1->M2]
+  n 5 -> n 7   w=+0.242 [CROSS M1->M2]
+  n 6 -> n 7   w=+0.167
+  n 8 -> n 7   w=+0.599 [CROSS M3->M2]
+  n13 -> n 7   w=-0.388 [CROSS M3->M2]
+  n 1 -> n 8   w=+0.191 [CROSS M0->M3]
+  n 2 -> n 8   w=+1.420 [CROSS M1->M3]
+  n 3 -> n 8   w=+0.189 [CROSS M1->M3]
+  n 6 -> n 8   w=+0.651 [CROSS M2->M3]
+  n 7 -> n 8   w=-0.103 [CROSS M2->M3]
+  n 9 -> n 8   w=+0.083
+  n11 -> n 8   w=+0.386
+  n12 -> n 8   w=+0.815
+  n14 -> n 8   w=-0.158
+  n 1 -> n 9   w=-0.768 [CROSS M0->M3]
+  n 4 -> n 9   w=+1.157 [CROSS M1->M3]
+  n 5 -> n 9   w=-0.064 [CROSS M1->M3]
+  n 6 -> n 9   w=-0.187 [CROSS M2->M3]
+  n 7 -> n 9   w=+0.113 [CROSS M2->M3]
+  n 8 -> n 9   w=+0.177
+  n 9 -> n 9   w=+0.155 [RECURSIVE]
+  n11 -> n 9   w=+1.029
+  n12 -> n 9   w=-0.137
+  n13 -> n 9   w=+1.881
+  n14 -> n 9   w=+0.460
+  n15 -> n 9   w=-0.882
+  n 2 -> n10   w=+0.377 [CROSS M1->M3]
+  n 3 -> n10   w=+0.192 [CROSS M1->M3]
+  n 5 -> n10   w=-0.745 [CROSS M1->M3]
+  n 6 -> n10   w=-0.827 [CROSS M2->M3]
+  n 7 -> n10   w=-0.271 [CROSS M2->M3]
+  n 8 -> n10   w=+0.565
+  n 9 -> n10   w=+1.161
+  n10 -> n10   w=-0.525 [RECURSIVE]
+  n11 -> n10   w=+0.160
+  n12 -> n10   w=+0.871
+  n13 -> n10   w=+0.365
+  n15 -> n10   w=+1.336
+  n 0 -> n11   w=-2.282 [CROSS M0->M3]
+  n 3 -> n11   w=+0.263 [CROSS M1->M3]
+  n 4 -> n11   w=-0.331 [CROSS M1->M3]
+  n 5 -> n11   w=+0.522 [CROSS M1->M3]
+  n 6 -> n11   w=+0.771 [CROSS M2->M3]
+  n 7 -> n11   w=-0.717 [CROSS M2->M3]
+  n 8 -> n11   w=-0.488
+  n 9 -> n11   w=+0.572
+  n10 -> n11   w=+0.884
+  n12 -> n11   w=+0.092
+  n14 -> n11   w=+0.109
+  n15 -> n11   w=+1.652
+  n 2 -> n12   w=+0.203 [CROSS M1->M3]
+  n 3 -> n12   w=+0.869 [CROSS M1->M3]
+  n 4 -> n12   w=+0.492 [CROSS M1->M3]
+  n 6 -> n12   w=+0.147 [CROSS M2->M3]
+  n 7 -> n12   w=-0.088 [CROSS M2->M3]
+  n 8 -> n12   w=+0.637
+  n 9 -> n12   w=-0.206
+  n11 -> n12   w=-1.609
+  n12 -> n12   w=-0.149 [RECURSIVE]
+  n13 -> n12   w=+0.103
+  n14 -> n12   w=-0.058
+  n15 -> n12   w=-0.070
+  n 0 -> n13   w=+0.072 [CROSS M0->M3]
+  n 5 -> n13   w=+0.546 [CROSS M1->M3]
+  n 6 -> n13   w=-0.269 [CROSS M2->M3]
+  n 7 -> n13   w=+1.154 [CROSS M2->M3]
+  n 8 -> n13   w=+1.047
+  n 9 -> n13   w=+0.068
+  n11 -> n13   w=-0.142
+  n 0 -> n14   w=+0.095 [CROSS M0->M3]
+  n 1 -> n14   w=-0.444 [CROSS M0->M3]
+  n 3 -> n14   w=+0.130 [CROSS M1->M3]
+  n 4 -> n14   w=+0.169 [CROSS M1->M3]
+  n 5 -> n14   w=-1.642 [CROSS M1->M3]
+  n 7 -> n14   w=-1.354 [CROSS M2->M3]
+  n 8 -> n14   w=+0.836
+  n 9 -> n14   w=+1.271
+  n11 -> n14   w=-2.478
+  n12 -> n14   w=-0.069
+  n13 -> n14   w=-0.355
+  n14 -> n14   w=+0.106 [RECURSIVE]
+  n15 -> n14   w=+0.297
+  n 0 -> n15   w=+2.249 [CROSS M0->M3]
+  n 2 -> n15   w=+0.624 [CROSS M1->M3]
+  n 4 -> n15   w=+1.380 [CROSS M1->M3]
+  n 5 -> n15   w=+0.581 [CROSS M1->M3]
+  n 8 -> n15   w=+0.261
+  n 9 -> n15   w=+0.207
+  n10 -> n15   w=-0.320
+  n11 -> n15   w=-0.380
+  n15 -> n15   w=+0.148 [RECURSIVE]
+
+CROSS-MODULE SUMMARY:
+  M0 -> M1: 1 wires
+  M0 -> M2: 3 wires
+  M0 -> M3: 7 wires
+  M1 -> M0: 8 wires
+  M1 -> M2: 5 wires
+  M1 -> M3: 20 wires
+  M2 -> M0: 2 wires
+  M2 -> M1: 5 wires
+  M2 -> M3: 13 wires
+  M3 -> M0: 9 wires
+  M3 -> M1: 20 wires
+  M3 -> M2: 7 wires
+
+RECURSIVE LOOPS:
+  n0 -> n0   w=-0.211
+  n2 -> n2   w=+0.401
+  n4 -> n4   w=+0.131
+  n5 -> n5   w=+0.769
+  n6 -> n6   w=-0.311
+  n9 -> n9   w=+0.155
+  n10 -> n10   w=-0.525
+  n12 -> n12   w=-0.149
+  n14 -> n14   w=+0.106
+  n15 -> n15   w=+0.148

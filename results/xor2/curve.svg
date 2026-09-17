@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" style="background:#fafafa;font-family:monospace">
+<text x="70" y="30" font-size="16" fill="black" font-weight="bold">xor2</text>
+<line x1="70" y1="360" x2="680" y2="360" stroke="black" stroke-width="1.5"/>
+<line x1="70" y1="50" x2="70" y2="360" stroke="black" stroke-width="1.5"/>
+<line x1="70" y1="50" x2="680" y2="50" stroke="#eee" stroke-width="1"/>
+<text x="62" y="54" text-anchor="end" font-size="10" fill="#666">-0.0000</text>
+<line x1="70" y1="127" x2="680" y2="127" stroke="#eee" stroke-width="1"/>
+<text x="62" y="131" text-anchor="end" font-size="10" fill="#666">-0.0625</text>
+<line x1="70" y1="205" x2="680" y2="205" stroke="#eee" stroke-width="1"/>
+<text x="62" y="209" text-anchor="end" font-size="10" fill="#666">-0.1250</text>
+<line x1="70" y1="282" x2="680" y2="282" stroke="#eee" stroke-width="1"/>
+<text x="62" y="286" text-anchor="end" font-size="10" fill="#666">-0.1875</text>
+<line x1="70" y1="360" x2="680" y2="360" stroke="#eee" stroke-width="1"/>
+<text x="62" y="364" text-anchor="end" font-size="10" fill="#666">-0.2500</text>
+<polyline points="70.0,360.0 192.0,360.0 314.0,360.0 436.0,360.0 558.0,360.0 680.0,50.0" fill="none" stroke="#1a5276" stroke-width="2.2"/>
+<text x="360" y="402" text-anchor="middle" font-size="12" fill="#333">generations</text>
+<text x="18" y="210" text-anchor="middle" font-size="12" fill="#333" transform="rotate(-90, 18, 210)">fitness</text>
+</svg>

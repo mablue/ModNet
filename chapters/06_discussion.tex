@@ -1,0 +1,528 @@
+% ============================================================
+%  Chapter 6: Discussion
+% ============================================================
+
+\chapter{Discussion}
+\label{ch:discussion}
+
+The results in Chapter~\ref{ch:results} raise several questions about
+the nature of the evolved structures, the boundary of the
+architecture's capabilities, and the relationship between \modnet{}
+and existing approaches to neuroevolution. This chapter interprets
+the main findings, discusses limitations and threats to validity, and
+proposes directions for future work.
+
+% ------------------------------------------------------------
+\section{Interpretation of the Main Findings}
+\label{sec:interpretation}
+% ------------------------------------------------------------
+
+\subsection{Layer-Free Computation Is Feasible}
+\label{sec:interpretation-layer-free}
+% ------------------------------------------------------------
+
+The most important result of this work is that a fully layer-free
+architecture can solve tasks that require nonlinear computation. XOR
+and 4-bit parity were solved exactly (Table~\ref{tab:main-results}),
+despite the fact that no single linear threshold unit can compute
+them \citep{minsky1969perceptrons}. This confirms that the absence of
+layers does not preclude nonlinear behavior: nonlinearity arises from
+the composition of threshold units through recurrent connections, not
+from an explicit layered structure.
+
+This is not obvious a priori. The layered architecture of modern
+neural networks is often justified by the fact that it makes the
+network's computation ``deep,'' allowing the composition of many
+simple nonlinearities into a complex function. A layer-free
+architecture, by contrast, has no notion of depth. Yet our results
+show that depth-like computation emerges naturally from the recurrent
+flow of information through a cyclic graph.
+
+A useful analogy is the difference between a feedforward circuit and
+a general program with loops. A feedforward circuit computes a
+function of bounded depth; a program with loops can compute functions
+of unbounded depth by iterating. \modnet{} is closer to the latter:
+each time step is like one iteration of a loop, and the network's
+output is a function of the input after $T$ iterations. This is not a
+new observation---it is the basis of recurrent neural networks
+\citep{siegelmann1995computational}---but our results show that it
+can be achieved without any predefined layer structure.
+
+\subsection{Emergent Structure Is Not Imposed}
+\label{sec:interpretation-emergent}
+% ------------------------------------------------------------
+
+The three structural properties we observed---cross-module
+integration, recurrence, and sparsity---were not enforced by the
+algorithm. The initial networks had random topologies, and no
+regularizer favored any particular structure. Yet all three
+properties emerged consistently across all six tasks.
+
+This is significant because it suggests that these properties are
+\emph{useful} for the tasks we considered, not merely artifacts of
+the search. If cross-module connections were useless, the search
+would have eliminated them through mutation; instead, they persist and
+even dominate (61--82\% of active connections). If recurrence were
+useless, self-loops would have been pruned; instead, every successful
+network contains them (2--13 per network). If dense connectivity were
+useful, the pruning mechanism would have preserved it; instead, only
+27--67\% of connections survive.
+
+The observation that cross-module integration is high (mean $72\%$)
+is particularly interesting. It suggests that the modules are not
+functioning as isolated components, but rather as a structured
+network in which information flows freely between modules. This is
+consistent with the principle of low coupling in software engineering
+\citep{parnas1972modularity}: modules have high cohesion internally,
+but they communicate with each other through a small number of
+well-defined interfaces. In our case, the ``interface'' is not
+explicit but emerges from the pattern of cross-module connections.
+
+\subsection{Growth Reflects Task Complexity}
+\label{sec:interpretation-growth}
+% ------------------------------------------------------------
+
+The two growth regimes we observed---shrinking for Boolean tasks and
+growing for continuous regression---suggest that the architecture
+adapts its size to the task. This is not a trivial result. In
+classical neural architecture search, the network size is typically
+fixed by the designer, or chosen by a separate procedure. In
+\modnet{}, the size emerges from the interaction between the growth
+and pruning mechanisms.
+
+The interpretation we favor is that Boolean tasks have low
+algorithmic complexity: a small network can compute them exactly, and
+any additional nodes would only add redundancy. The pruning mechanism
+removes this redundancy, causing the network to shrink. Continuous
+tasks, by contrast, require a fine-grained approximation of a smooth
+function, which requires more parameters; the growth mechanism adds
+nodes until the approximation is adequate.
+
+This interpretation is consistent with the classical distinction
+between symbolic and subsymbolic computation. Boolean functions are
+symbolic: their computation is discrete, and a small circuit suffices.
+Continuous functions are subsymbolic: their computation is graded,
+and many parameters are needed to resolve the gradations. \modnet{}
+appears to adapt to both regimes without any explicit mechanism for
+distinguishing them.
+
+% ------------------------------------------------------------
+\section{Relationship to Related Work}
+\label{sec:relation-related}
+% ------------------------------------------------------------
+
+\subsection{Comparison with NEAT and HyperNEAT}
+\label{sec:relation-neat}
+% ------------------------------------------------------------
+
+NEAT \citep{stanley2002evolving} and HyperNEAT
+\citep{stanley2009hypercube} are the most closely related works to
+\modnet{}. Both use evolutionary search to discover network topology,
+and both have been shown to be effective on a wide range of tasks.
+However, there are three important differences.
+
+First, NEAT and HyperNEAT both use layered networks. NEAT begins with
+a network of input and output nodes connected by a small number of
+links, and grows by adding nodes that form a new layer between
+existing nodes. HyperNEAT operates on a substrate that is typically a
+grid of neurons with predefined geometric structure. \modnet{}, by
+contrast, has no layers and no predefined substrate: any node may
+connect to any other, and the network's geometry is not constrained.
+
+Second, \modnet{} uses a modular structure that is not present in
+NEAT or HyperNEAT. The modules in \modnet{} are not functional
+decompositions specified by the designer, but rather emergent
+subgroups of nodes that the evolutionary process discovers to be
+useful. This is closer to the ``co-evolutionary modules'' of
+\citet{khare2005coevolutionary}, but with the important difference
+that the number and size of modules in \modnet{} are not fixed but
+evolve alongside the network topology.
+
+Third, \modnet{} uses aggressive pruning as a first-class operation,
+whereas NEAT and HyperNEAT grow monotonically. Our results show that
+pruning is essential: it removes redundancy that would otherwise
+accumulate, and it allows the network to shrink when the task does
+not require a large size. This is consistent with the biological
+observation that neural development involves both growth and
+regressive events such as synaptic pruning
+\citep{chklovskii2004wiring}.
+
+\subsection{Comparison with Self-Organizing Systems}
+\label{sec:relation-self-org}
+% ------------------------------------------------------------
+
+The LNDP of \citet{plantec2024evolving} and the GRN-SO-RC of
+\citet{hajizada2024developmental} are the closest self-organizing
+systems to \modnet{}. Both grow networks from a single cell, and both
+use local rules to control the growth process. However, both rely on
+gradient-based learning for the weights, whereas \modnet{} is fully
+gradient-free. This is a significant difference: gradient-based
+learning requires a differentiable activation function, which imposes
+constraints on the types of neurons that can be used. \modnet{}'s
+use of the Heaviside step function is only possible because the
+weights are evolved rather than trained.
+
+The GRN-SO-RC also uses a modular structure, but its modules are
+predetermined by the reservoir computing framework. In \modnet{},
+modules are not a framework constraint but an architectural element
+whose properties are under evolutionary control.
+
+\subsection{Comparison with Neural Cellular Automata}
+\label{sec:relation-nca}
+% ------------------------------------------------------------
+
+Neural cellular automata \citep{mordvintsev2020growing} share with
+\modnet{} the idea that computation can be local, recurrent, and free
+of predefined layers. However, there is a crucial difference: in a
+neural cellular automaton, every cell follows the same update rule,
+and the topology is fixed by the grid. In \modnet{}, each node has
+its own weights and connections, and the topology itself is evolved.
+This makes \modnet{} more expressive (each node can learn a different
+function) but also more difficult to search (the search space is
+larger).
+
+The universal computation result for neural cellular automata
+\citep{bena2025path} suggests that \modnet{} might also be Turing
+complete, provided that the number of nodes and time steps can be
+made arbitrarily large. We have not proven this formally, but the
+result is plausible given that \modnet{} contains recurrent neural
+networks as a special case (by appropriately restricting the
+connectivity pattern).
+
+% ------------------------------------------------------------
+\section{Limitations}
+\label{sec:limitations}
+% ------------------------------------------------------------
+
+\subsection{Limited Scale}
+\label{sec:limitation-scale}
+% ------------------------------------------------------------
+
+The largest network in our experiments has 30 nodes. This is small by
+modern standards: even a modest feedforward network for a real-world
+task typically has thousands of parameters. The primary reason for
+this limitation is computational: the fitness evaluation is
+$O(E \cdot T)$ per network, and the evolutionary algorithm performs
+$O(P \cdot G)$ evaluations, so the total cost grows with the size of
+the network. On a phone CPU, networks with more than a few hundred
+nodes become impractical.
+
+This is not a fundamental limitation of the architecture, but a
+practical one. With more computational resources (a GPU cluster, a
+distributed search), \modnet{} could be scaled to much larger
+networks. However, scaling brings new challenges: the search space
+grows exponentially with the number of nodes, and the evolutionary
+algorithm may struggle to find good solutions in higher dimensions.
+Addressing these challenges is a direction for future work.
+
+\subsection{Limited Task Diversity}
+\label{sec:limitation-tasks}
+% ------------------------------------------------------------
+
+The six tasks we considered all involve low-dimensional inputs (2--8
+bits) and outputs (1--8 bits). This is far from the dimensionality of
+real-world problems, which often involve images, text, or audio with
+thousands or millions of dimensions. We have not demonstrated that
+\modnet{} scales to these regimes, and there are reasons to be
+cautious: the number of nodes required grows with the complexity of
+the function, and the evolutionary search may not find good solutions
+in high-dimensional spaces.
+
+A more fundamental concern is the encoding. Our current encoding
+requires quantizing continuous values to a fixed number of bits, and
+the number of bits grows logarithmically with the required precision.
+For a $1000$-dimensional input with $8$-bit precision per dimension,
+the input would be $8000$ bits, and even a small network would need
+thousands of nodes to process them. Whether \modnet{} can handle this
+scale is an open question.
+
+\subsection{No Theoretical Guarantees}
+\label{sec:limitation-theory}
+% ------------------------------------------------------------
+
+We have not proven any theoretical properties of \modnet{}. In
+particular, we have not shown that the evolutionary algorithm
+converges to a global optimum, nor that the architecture is
+universal in the sense of Turing completeness. The empirical results
+are encouraging, but they do not constitute a proof.
+
+This is a common situation in neuroevolution: most algorithms in this
+family are evaluated empirically rather than theoretically. However,
+the lack of guarantees means that \modnet{}'s behavior in new tasks
+is unpredictable: it may succeed brilliantly, or it may fail
+catastrophically, and we do not have a principled way to predict
+which will happen.
+
+\subsection{Dependence on Hyperparameters}
+\label{sec:limitation-hyper}
+% ------------------------------------------------------------
+
+The performance of \modnet{} depends on several hyperparameters, most
+notably the number of time steps $T$, the population size $P$, and
+the number of generations $G$. We chose these values by preliminary
+experiments, but we did not perform a systematic sensitivity analysis.
+It is possible that some tasks would be solved much faster with
+different hyperparameters, and it is also possible that some
+hyperparameters we chose poorly and would have led to better
+performance with a different value.
+
+This is a well-known issue in evolutionary computation: the
+performance of the algorithm often depends sensitively on
+hyperparameter choices, and finding good choices requires either
+extensive experimentation or prior knowledge about the task.
+
+\subsection{Determinism and Reproducibility}
+\label{sec:limitation-repro}
+% ------------------------------------------------------------
+
+Our experiments use a fixed random seed, which ensures that the
+results are exactly reproducible. However, this also means that our
+results are specific to one seed. With a different seed, the
+algorithm might find a different (and possibly better or worse)
+network. We have not performed a multi-seed analysis, which would
+allow us to report means and standard deviations across runs.
+
+The lack of multi-seed analysis is a significant limitation for a
+paper that aims to make general claims about the architecture. A
+single seed may produce atypical results, and it is difficult to
+distinguish between a robust pattern and a coincidence without
+multiple runs.
+
+% ------------------------------------------------------------
+\section{Threats to Validity}
+\label{sec:threats}
+% ------------------------------------------------------------
+
+\subsection{Internal Validity}
+\label{sec:threats-internal}
+% ------------------------------------------------------------
+
+The main internal threat to validity is the choice of fitness
+function. We used mean squared error for all tasks, which is a
+standard but not universal choice. For Boolean tasks, a different
+fitness function (such as classification accuracy) might lead to
+different results, because the gradients of the two functions differ.
+For regression tasks, a robust loss (such as Huber loss) might
+outperform MSE in the presence of outliers.
+
+A second internal threat is the choice of activation function. We
+used the Heaviside step function, which is the simplest threshold
+activation. Other choices (such as sigmoid or ReLU) are possible but
+would require a different learning algorithm (since the step function
+is not differentiable). It is not clear whether \modnet{} would
+perform similarly with a different activation.
+
+\subsection{External Validity}
+\label{sec:threats-external}
+% ------------------------------------------------------------
+
+The main external threat to validity is the choice of tasks. Our six
+tasks are all small and synthetic. They were chosen to span a range
+of difficulties (from XOR to 6-bit parity and from a single sinusoid
+to a two-dimensional quadratic surface), but they are far from the
+tasks that are typically used to evaluate neural networks. In
+particular, none of our tasks involves structured inputs (images,
+sequences, graphs), and none requires long-range dependencies.
+
+It is possible that \modnet{} would perform well on some real-world
+tasks and poorly on others, and we do not have a principled way to
+predict which. This is a general limitation of empirical evaluations
+in machine learning, and it is not specific to \modnet{}.
+
+\subsection{Construct Validity}
+\label{sec:threats-construct}
+% ------------------------------------------------------------
+
+The main construct threat to validity is the interpretation of the
+structural metrics we use. Our measure of modularity, the proportion
+of cross-module connections, is a proxy for a more nuanced concept.
+Two networks with the same proportion of cross-module connections
+might have very different structures: one might be a fully connected
+network with a uniform distribution of connections, while the other
+might be a modular network with a few high-capacity cross-module
+links. Our metric cannot distinguish between these cases.
+
+Similarly, our measure of recurrence (the number of self-loops)
+captures only one type of recurrence. Longer cycles
+($i_1 \to i_2 \to \cdots \to i_\ell \to i_1$) are not counted, and
+these may be just as important for the network's function. A more
+thorough analysis would count all cycles, not just self-loops.
+
+% ------------------------------------------------------------
+\section{Future Work}
+\label{sec:future}
+% ------------------------------------------------------------
+
+\subsection{Scaling to Larger Networks}
+\label{sec:future-scale}
+% ------------------------------------------------------------
+
+The most obvious direction for future work is to scale \modnet{} to
+larger networks. There are several ways to approach this.
+
+First, we can parallelize the fitness evaluation. Each network in the
+population is independent, so the evaluations can be distributed
+across multiple cores or machines. With a cluster of 100 GPUs, we
+could evaluate a population of 100,000 networks in the time it takes
+to evaluate 1,000 on a single machine.
+
+Second, we can use a more efficient encoding. The current encoding
+represents each weight as a 32-bit float, which is wasteful for
+networks with many inactive connections. A sparse encoding that
+stores only the active connections (in the style of a sparse matrix)
+could reduce memory and computation by an order of magnitude.
+
+Third, we can use a more sophisticated search algorithm. The
+evolutionary algorithm we use is simple; more advanced methods such
+as CMA-ES, differential evolution, or Bayesian optimization might
+converge faster. The choice of algorithm is orthogonal to the
+architecture: \modnet{} can be combined with any evolutionary search
+method.
+
+\subsection{Combining Evolution with Gradient Descent}
+\label{sec:future-hybrid}
+% ------------------------------------------------------------
+
+A natural extension of \modnet{} is to combine evolutionary topology
+search with gradient-based weight optimization. In this hybrid
+approach, the evolutionary algorithm would discover the topology, and
+gradient descent would fine-tune the weights. This is analogous to
+the approach taken by \citet{real2019regularized} for image
+classification, but applied to the layer-free setting.
+
+The challenge is that the Heaviside activation is not differentiable,
+so standard backpropagation cannot be applied directly. There are
+several ways to address this. One is to use a differentiable
+surrogate for the activation during training, and then use the
+original Heaviside activation during evaluation. This is the approach
+taken by spiking neural networks, where the spike function is
+approximated by a smooth function during backpropagation
+\citep{neftci2019surrogate}. Another approach is to replace the
+Heaviside with a sigmoid during a ``polishing'' phase, and then
+revert to the Heaviside once the weights have converged.
+
+We have explored the second approach in preliminary experiments, but
+the results were not encouraging: the gradient information was not
+informative enough to improve the weights significantly. A more
+thorough investigation is needed to determine whether this approach
+can work in practice.
+
+\subsection{Extending to Structured Inputs}
+\label{sec:future-structured}
+% ------------------------------------------------------------
+
+Our current encoding assumes that inputs are unstructured vectors of
+bits. Many real-world tasks involve structured inputs: images have
+spatial structure, sequences have temporal structure, and graphs have
+relational structure. Extending \modnet{} to handle these inputs
+would require incorporating structural priors into the architecture.
+
+One approach is to use a convolutional or graph-based preprocessing
+layer to extract local features, and then feed these features to a
+\modnet{} network. This is analogous to the way that modern vision
+models use a convolutional backbone followed by a fully connected
+head. The difference is that the head in our case is a layer-free
+recurrent network rather than a stack of dense layers.
+
+Another approach is to make \modnet{} itself structure-aware, by
+allowing nodes to have ``receptive fields'' that are defined by the
+input structure. This is closer to the approach taken by HyperNEAT
+\citep{stanley2009hypercube}, where the geometry of the substrate
+encodes the structure of the input. Extending this idea to the
+layer-free setting is an interesting direction.
+
+\subsection{Theoretical Analysis}
+\label{sec:future-theory}
+% ------------------------------------------------------------
+
+Finally, a more thorough theoretical analysis of \modnet{} would be
+valuable. There are several questions we would like to answer:
+
+\begin{itemize}
+  \item What is the computational power of \modnet{}? Is it Turing
+    complete? Under what conditions on the number of nodes and time
+    steps?
+  \item What is the relationship between the evolved structure and
+    the task? Can we predict the number of nodes required for a
+    given task? Can we characterize the class of tasks that \modnet{}
+    can solve efficiently?
+  \item What is the convergence rate of the evolutionary algorithm?
+    How many generations are required to reach a given level of
+    accuracy? How does this depend on the task?
+  \item Is the modular structure that emerges optimal in any sense?
+    Could a different modular decomposition lead to better
+    performance?
+\end{itemize}
+
+Answering these questions would require a combination of empirical
+studies and theoretical analysis, and would likely require tools from
+several fields (evolutionary computation, complexity theory, and
+statistical learning theory).
+
+% ------------------------------------------------------------
+\section{Broader Implications}
+\label{sec:broader}
+% ------------------------------------------------------------
+
+Beyond the technical results, this work has broader implications for
+the way we think about neural architecture design.
+
+The dominant paradigm in modern machine learning is to design
+architectures by hand, guided by intuition and empirical tuning. This
+has been extremely successful, but it has also led to a proliferation
+of architectures that are highly specialized for particular tasks.
+The transformer, for example, is optimized for sequences; the
+convolutional network is optimized for images; the recurrent network
+is optimized for time series. Each architecture comes with its own
+set of hyperparameters, its own training procedure, and its own
+failure modes.
+
+\modnet{} suggests an alternative: a single, general-purpose
+architecture that can be adapted to any task through evolution. The
+same node model, the same fitness function, and the same evolutionary
+algorithm solved Boolean logic and continuous regression with no
+task-specific modifications. This is not to say that \modnet{} is
+better than specialized architectures on their home turf---it is
+not, at least not at the scale we have tested. But it does suggest
+that architecture design can be automated, and that the resulting
+architectures need not be specialized.
+
+This is reminiscent of the ``no free lunch'' theorem
+\citep{wolpert1997no}, which states that no single algorithm is best
+for all problems. But our results suggest a weaker version of the
+theorem: no single \emph{architecture} is best for all problems, but
+a single architecture combined with a powerful search algorithm might
+be able to solve a wide range of problems by discovering
+task-specific structures on the fly. This is the essence of
+meta-learning, and \modnet{} is a step in that direction.
+
+% ------------------------------------------------------------
+\section{Summary}
+\label{sec:discussion-summary}
+% ------------------------------------------------------------
+
+This chapter has interpreted the results of Chapter~\ref{ch:results}
+and discussed their limitations. The main conclusions are:
+
+\begin{enumerate}
+  \item \textbf{Layer-free computation is feasible.} The absence of
+    layers does not preclude nonlinear behavior; it simply shifts the
+    burden of computation from a fixed architecture to an evolved one.
+
+  \item \textbf{Emergent structure is meaningful.} Cross-module
+    integration, recurrence, and sparsity are not artifacts of the
+    search; they are properties that the search actively discovers to
+    be useful.
+
+  \item \textbf{The architecture has limits.} Parity-6 was not solved
+    exactly within our computational budget, and there is no reason to
+    expect \modnet{} to scale indefinitely.
+
+  \item \textbf{There is much room for improvement.} The current
+    implementation is a proof of concept, not a production system.
+    Scaling, hybrid learning, structured inputs, and theoretical
+    analysis are all promising directions for future work.
+\end{enumerate}
+
+These observations motivate the concluding remarks in
+Chapter~\ref{ch:conclusion}.
