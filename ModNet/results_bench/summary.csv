@@ -1,0 +1,13 @@
+problem,desc,kind,n_in,n_out,best_fit,rmse,accuracy,size,rec,wires,time,gens_run,status
+xor2,2-bit XOR,boolean,2,1,-0.000000,0.000000,1.0000,8,1,17,1.0,43,SOLVED
+xor3,3-bit XOR,boolean,3,1,-0.000000,0.000000,1.0000,26,8,117,3.2,123,SOLVED
+parity4,Parity-4,boolean,4,1,-0.000000,0.000000,1.0000,26,0,61,2.4,79,SOLVED
+parity6,Parity-6,boolean,6,1,-0.031250,0.176777,0.9688,11,8,71,58.7,1499,PARTIAL
+majority3,Majority of 3,boolean,3,1,-0.000000,0.000000,1.0000,26,6,52,0.2,11,SOLVED
+majority5,Majority of 5,boolean,5,1,-0.000000,0.000000,1.0000,9,5,31,1.9,70,SOLVED
+mux4to1,4-to-1 MUX,boolean,6,1,-0.000000,0.000000,1.0000,27,3,177,27.7,316,SOLVED
+sin2pi,sin(2πx),regression,4,8,-0.001445,0.038008,,27,11,313,63.0,1499,SOLVED
+sin4pi,sin(4πx),regression,4,8,-0.005525,0.074329,,27,8,308,68.6,1499,PARTIAL
+circle,x² + y²,regression,8,8,-0.000312,0.017650,,27,11,313,44.1,1149,SOLVED
+gaussian,Gaussian exp(-x²),regression,4,8,-0.001605,0.040058,,27,8,226,56.8,1499,SOLVED
+multiply,x · y,regression,8,8,-0.000767,0.027688,,18,10,187,47.2,1499,SOLVED

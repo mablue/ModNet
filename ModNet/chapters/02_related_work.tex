@@ -1,0 +1,380 @@
+% ============================================================
+%  Chapter 2: Related Work
+% ============================================================
+
+\chapter{Related Work}
+\label{ch:related}
+
+Our work sits at the intersection of four research traditions: neuroevolution,
+modular neural networks, self-organizing and developmental systems, and the
+theory of Boolean function learning. This chapter reviews each in turn and
+identifies the gap that \modnet{} addresses.
+
+% ------------------------------------------------------------
+\section{Neuroevolution: Evolving Neural Network Topologies}
+\label{sec:neat}
+% ------------------------------------------------------------
+
+The idea that neural network topology can be evolved rather than designed
+dates back to the early 1990s. \citet{gruau1994neural} introduced
+\emph{Cellular Encoding}, in which a genetic program simultaneously evolves
+the architecture, weights, thresholds, and biases of a neural network. The
+genotype is a tree of graph-rewriting rules inspired by L-systems; through
+development, this tree unfolds into a network of arbitrary size and shape.
+Gruau demonstrated that cellular encoding could generate modular neural
+networks and used it to evolve a controller for a hexapod robot. This early
+work established the principle that complex structure can emerge from a
+compact generative description.
+
+The NeuroEvolution of Augmenting Topologies (NEAT) algorithm of
+\citet{stanley2002evolving} became the canonical framework for topology-evolving
+neuroevolution. NEAT starts from a minimal network and incrementally adds nodes
+and connections through structural mutation. It introduces three key ideas:
+historical markings to allow meaningful crossover between networks of different
+topologies, speciation to protect structural innovation from premature
+competition, and complexification from small initial topologies. NEAT was shown
+to outperform fixed-topology methods on reinforcement learning benchmarks
+\citep{stanley2002efficient} and has since been applied to domains ranging from
+autonomous rover navigation \citep{shrestha2025reinforced} to scheduling
+problems \citep{neat2024scheduling}.
+
+HyperNEAT \citep{stanley2009hypercube} extended NEAT with an indirect encoding
+based on Compositional Pattern-Producing Networks (CPPNs). Instead of directly
+encoding each connection, HyperNEAT evolves a CPPN whose output at any pair of
+coordinates specifies the weight of the corresponding connection. This
+geometric encoding exploits regularity in the substrate and scales to
+networks with millions of connections \citep{clune2011performance}. The
+Enhanced Hypercube-based Encoding (ES-HyperNEAT) of \citet{risi2012enhanced}
+further allowed the placement, density, and connectivity of neurons to be
+evolved rather than fixed.
+
+Recent work has focused on accelerating NEAT and extending its reach.
+\citet{wang2024tensorized} introduced a tensorization method that transforms
+the diverse topologies of NEAT into uniformly shaped tensors, enabling GPU
+acceleration and reducing training time by an order of magnitude.
+\citet{lyubchev2025revisiting} revisited the original NEAT formalism and
+proposed improvements to the mutation and selection operators.
+
+Despite their success, these methods share a common assumption: the network is
+organized into layers or a predefined substrate geometry. HyperNEAT's CPPN
+operates on a grid; NEAT's complexification adds nodes to hidden layers;
+tensorized NEAT pads topologies into fixed-shape tensors. None of these
+approaches explores fully layer-free computation in which \emph{any node may
+connect to any other node}, including itself, and in which the module structure
+itself emerges from the evolutionary process.
+
+% ------------------------------------------------------------
+\section{Modular Neural Networks}
+\label{sec:modular}
+% ------------------------------------------------------------
+
+Modularity is a well-established design principle in software engineering.
+\citet{parnas1972modularity} argued that systems should be decomposed into
+modules with clean interfaces, hidden implementation details, low coupling
+between modules, and high cohesion within modules. This principle has been
+remarkably successful in software design \citep{larman2004applying}, and it is
+natural to ask whether it applies to neural computation as well.
+
+\citet{alho2024modularity} conducted a systematic review of 86 studies on
+modular neural networks and found that nearly two-thirds report improvements
+in task accuracy compared to monolithic architectures, with 82\% reporting
+benefits in training or inference efficiency. This suggests that modularity
+is not merely a design preference but a computationally meaningful structural
+property.
+
+In the context of neuroevolution, \citet{khare2005coevolutionary} proposed a
+co-evolutionary model in which a population of modules is evolved alongside a
+population of complete systems that combine modules. They demonstrated that if
+a particular task decomposition is beneficial, it can be discovered through
+this mechanism. However, their model requires the designer to specify the
+number of modules and the interface between them.
+
+\citet{landassuri2012evolution} investigated the emergence of modularity in
+evolved neural networks and found that pure-modular architectures emerge at
+low connectivity values, and that the more different two tasks are, the
+greater the modularity obtained during evolution. This suggests that modularity
+is an emergent property of evolutionary search under certain conditions, not a
+design choice imposed from above.
+
+More recent work has examined modularity in the context of reinforcement
+learning. \citet{munn2024towards} used NEAT to generate networks of varying
+modularity on three RL tasks and found that structural modularity correlated
+with performance on tasks that admitted natural task decomposition, but not on
+others. This result highlights the importance of measuring modularity in a
+task-appropriate way.
+
+Related work in hierarchical modular networks includes \citet{rodriguez2025hierarchical},
+who showed that multi-level hierarchical modular networks, when implemented as
+recurrent neural network reservoirs, enhance memory capacity, support
+multitasking, and give rise to a broader range of temporal dynamics compared
+to strictly modular or random networks. The modular growth curriculum of
+\citet{2024modulargrowth} similarly showed that gradual modular growth of RNNs
+provides advantages for learning increasingly complex tasks.
+
+The key distinction between these works and \modnet{} is that in \modnet{},
+modular structure is not merely a measurable property of an evolved network;
+it is an explicit design element whose size, count, and internal connectivity
+are all under evolutionary control. Modules are not predefined, and
+cross-module connections emerge as the task demands.
+
+% ------------------------------------------------------------
+\section{Self-Organizing and Developmental Systems}
+\label{sec:selforg}
+% ------------------------------------------------------------
+
+A parallel line of research investigates neural networks inspired by
+biological development. Rather than evolving a fixed structure, these systems
+grow, prune, and reorganize themselves through local rules.
+
+\citet{plantec2024evolving} proposed the Lifelong Neural Developmental Program
+(LNDP), a class of self-organizing networks capable of synaptic and structural
+plasticity in an activity- and reward-dependent manner. Their results
+demonstrated that structural plasticity is advantageous in environments
+requiring fast adaptation or with non-stationary rewards. The LNDP grows from
+a single cell using a Neural Developmental Program, but the growth rules
+themselves are evolved, not the topology directly.
+
+The GRN-SO-RC model of \citet{hajizada2024developmental} uses a gene regulatory
+network (GRN) to regulate synaptic and structural plasticity in a reservoir
+computing framework. The structure of the reservoir self-organizes to adapt to
+the specific task through the GRN mechanism. This work is notable for
+demonstrating that self-organized reservoir structures can match or exceed the
+performance of hand-designed topologies.
+
+The broader relationship between neuroevolution and gene regulatory networks
+was reviewed by \citet{2025neuroevolution}, who noted that GRNs are more robust
+to mutation and thus more evolvable than direct neuroevolution. This
+observation motivates the use of compact, generative encodings rather than
+direct encodings of network structure.
+
+\citet{hazan2024self} proposed a biologically inspired developmental algorithm
+that grows a functional, layered neural network from a single initial cell.
+The growth process is driven by noise and local self-organization, and the
+resulting networks achieve competitive performance on standard benchmarks.
+
+Finally, the broader relationship between self-organization and neural
+computation was reviewed by \citet{gershenson2010guiding}, who surveyed eight
+methods for guiding the self-organization of random Boolean networks toward
+the critical dynamical regime. This work is particularly relevant because the
+critical regime—poised between order and chaos—is believed to maximize
+information processing capacity, and is a natural target for self-organizing
+neural systems.
+
+% ------------------------------------------------------------
+\section{Biological Inspiration: Criticality and Small-World Topology}
+\label{sec:bio}
+% ------------------------------------------------------------
+
+Biological neural networks exhibit two structural properties that have been
+extensively studied: critical dynamics and small-world topology.
+
+The criticality hypothesis states that the brain operates near the phase
+transition between order and disorder, where information transmission is
+maximized \citep{beggs2007criticality}. \citet{poil2025network} reviewed the
+mechanisms by which this critical state is maintained, identifying
+self-organized criticality (SOC) as a leading candidate.
+\citet{2026organoid} demonstrated that human forebrain organoids self-organize
+to a computationally favorable critical state without external input,
+providing empirical support for the self-organization hypothesis. In the
+context of modular networks, \citet{2025hierarchicalmodular} showed that
+structural modularity tunes mesoscale criticality in biological neuronal
+networks.
+
+Small-world topology—characterized by high clustering and short path
+lengths—has also been studied extensively. \citet{2024emergence} evolved a
+recurrent spiking neural network through neuroevolution and found that
+spontaneously evolved topologies exhibit biologically plausible small-world
+properties, including densely connected hub nodes, short paths, and long-tailed
+degree distributions. \citet{2026evolutionarily} similarly found that
+evolutionarily optimized network topologies exhibit sparse connectivity,
+small-world organization, and modular architecture, and that these structural
+features—not connection density—drive performance advantages over matched
+random and Watts–Strogatz baselines.
+
+Scale-free connectivity is a related concept. \citet{mocanu2018scalable}
+showed that during training, the hidden neurons of a sparse restricted
+Boltzmann machine naturally evolve from an Erd\H{o}s–R\'enyi topology toward a
+scale-free one. In the context of Hopfield networks, \citet{2004topology}
+showed that scale-free topologies store and retrieve binary patterns more
+efficiently than random-diluted networks with the same number of synapses.
+
+These biological and topological findings provide both motivation and
+validation for \modnet{}. Our architecture does not enforce small-world or
+scale-free structure; we observe that sparsity, cross-module integration, and
+recurrence emerge from evolutionary pressure alone, without explicit
+regularization for any of these properties.
+
+% ------------------------------------------------------------
+\section{Boolean Function Learning and Parity}
+\label{sec:boolean}
+% ------------------------------------------------------------
+
+The learning of Boolean functions by neural networks has been a foundational
+problem since the perceptron. \citet{minsky1969perceptrons} proved that a
+single-layer perceptron cannot compute the XOR function, nor the parity
+function for any number of inputs. Their proof rests on the fact that
+threshold functions are monotone (or anti-monotone) in each variable, and
+therefore cannot compute a function as sensitive as parity.
+
+The theoretical hardness of parity for bounded-depth threshold circuits was
+subsequently quantified. \citet{impagliazzo1997size} showed that any
+threshold circuit of depth $d$ that computes the parity function on $n$
+variables must have at least $n^{1 + c\theta^{-d}}$ edges for some constants
+$c, \theta > 0$. This is the first superlinear lower bound for an explicit
+function that holds for any fixed depth and applies to threshold circuits with
+unrestricted weights. \citet{2018averagecase} proved average-case lower
+bounds: parity has correlation at most $n^{-\varepsilon_d}$ with depth-$d$
+threshold circuits that have at most $n^{1+\varepsilon_d}$ wires. These results
+imply that solving parity at scale requires either increasing depth, increasing
+width, or introducing recurrence—all of which \modnet{} exploits.
+
+Empirically, several approaches have addressed the parity problem directly.
+\citet{iyoda2003parity} introduced a single neuron with a periodic activation
+function that can compute $n$-bit parity exactly for any $n$.
+\citet{grochowski2007learning} studied the learning of highly non-separable
+Boolean functions using constructive feedforward networks, and demonstrated
+that the depth-3 architecture of the Boolean inner product is substantially
+harder to train than a depth-2 network. More recently, \citet{2024pac}
+studied the learnability of Boolean functions on deep neural networks from a
+PAC-learning perspective, and found that smaller formulas are harder to learn,
+and that underconstrained 3-CNF formulas are more challenging than
+overconstrained ones.
+
+\modnet{} addresses the parity problem from a different angle: rather than
+designing a specific activation function or training a fixed architecture, we
+allow the network to discover a topology that computes parity through
+evolution. Our results show that 4-bit parity can be solved exactly with 12
+nodes, and 6-bit parity to 93.8\% accuracy with 10 nodes—without any
+parity-specific design.
+
+% ------------------------------------------------------------
+\section{Sparse and Efficient Neural Computation}
+\label{sec:sparse}
+% ------------------------------------------------------------
+
+Biological neural networks are highly sparse: the probability that any two
+neurons are connected is on the order of $10^{-6}$ \citep{lecun2015deep}.
+This sparsity is not accidental; it reflects metabolic and wiring-length
+constraints \citep{chklovskii2004wiring, cherniak1994component}.
+
+In artificial neural networks, sparsity has been studied primarily as a
+compression technique. The Sparse Evolutionary Training (SET) method of
+\citet{mocanu2018scalable} evolves an initial sparse topology into a
+scale-free topology during training, allowing the training of networks with
+over one million neurons on commodity hardware. \citet{liu2019sparse}
+extended this approach to show that vanilla SET-MLP can be implemented from
+scratch using just pure Python and SciPy, and that the resulting networks
+achieve competitive accuracy on standard benchmarks.
+\citet{2019cosine} proposed a cosine-similarity-based selection criterion for
+SET that improves the efficiency of the evolutionary topology update.
+
+More recent work has considered pruning from an evolutionary perspective.
+\citet{shah2026pruning} modeled parameter groups as populations whose
+influence evolves under selection pressure, arguing that sparsity is not
+merely a design choice but an emergent property of selection dynamics under
+resource constraints. \citet{hershey2025balancing} showed that sparse RNNs can
+be balanced with appropriate hyperparameterization, and that this balance
+benefits meta-learning.
+
+The relationship between sparsity and modularity is intimate.
+\citet{landassuri2012evolution} found that pure-modular architectures emerge
+at low connectivity values, suggesting that sparsity and modularity are two
+faces of the same underlying structural pressure. In \modnet{}, the pruning
+mechanism operates without any explicit sparsity target: nodes and connections
+are removed when they become inactive or isolated, and the resulting networks
+end up with 27–67\% active-wire density, depending on the task.
+
+% ------------------------------------------------------------
+\section{Neural Architecture Search}
+\label{sec:nas}
+% ------------------------------------------------------------
+
+Neural Architecture Search (NAS) automates the design of network
+architectures. Since the influential work of \citet{zoph2017neural},
+which formulated NAS as a reinforcement learning problem, the field has grown
+rapidly. Modern NAS methods include evolutionary approaches
+\citep{real2019regularized}, gradient-based approaches such as DARTS
+\citep{liu2019darts}, and one-shot methods \citep{pham2018efficient}.
+\citet{ren2024advances} and \citet{ozcelik2026evolutionary} provide recent
+surveys.
+
+\modnet{} differs from mainstream NAS in two important respects. First, the
+search space is not a discrete set of predefined building blocks (e.g.,
+convolutional cells or attention modules); it is the space of all directed
+graphs over a fixed number of nodes, with node-level operations drawn from a
+small set of weighted-sum-plus-threshold units. Second, the search is
+performed by a compact evolutionary algorithm that does not use gradient
+information, and the resulting architecture is not a layered stack but a
+recurrent graph with modular structure.
+
+% ------------------------------------------------------------
+\section{Universal Computation and Neural Cellular Automata}
+\label{sec:universal}
+% ------------------------------------------------------------
+
+The theoretical foundations of neural computation were established by
+\citet{siegelmann1995computational}, who proved that recurrent neural networks
+with rational weights are Turing complete. More recently, \citet{perez2021turing}
+showed that transformers are Turing complete without external memory, and
+\citet{bates2026pytorch} released a library of Turing-complete neural networks
+for reproducible experimentation. \citet{stogin2024provably} constructed a
+provably stable neural network Turing machine with finite precision and time.
+
+Cellular automata provide a complementary perspective. Rule 110 was proven
+Turing complete by \citet{cook2004universality}, and reversible
+two-dimensional cellular spaces were shown to support universal computation
+by \citet{morita2002universal}. Neural cellular automata, introduced by
+\citet{mordvintsev2020growing}, train a cellular automaton to grow and
+regenerate a target image from a single seed. \citet{bena2025path} recently
+demonstrated that neural cellular automata can achieve universal computation
+in a continuous setting.
+
+\modnet{} shares with neural cellular automata the idea that computation
+can be local, recurrent, and free of any predefined layer structure. However,
+while neural cellular automata operate on a fixed grid with a shared update
+rule, \modnet{} allows the topology itself—including the number and
+connectivity of nodes—to be evolved.
+
+% ------------------------------------------------------------
+\section{Summary and Positioning}
+\label{sec:positioning}
+% ------------------------------------------------------------
+
+Table~\ref{tab:positioning} summarizes the relationship between \modnet{}
+and the most closely related architectures.
+
+\begin{table}[h]
+  \centering
+  \small
+  \caption{Positioning of \modnet{} relative to related architectures.}
+  \label{tab:positioning}
+  \begin{tabular}{lccccc}
+    \toprule
+    \textbf{Architecture} & \textbf{Layer-free} & \textbf{Recurrent}
+      & \textbf{Modular} & \textbf{Grown} & \textbf{Gradient-free} \\
+    \midrule
+    NEAT \citep{stanley2002evolving} & No & Optional & No & Yes & Yes \\
+    HyperNEAT \citep{stanley2009hypercube} & No & No & No & Yes & Yes \\
+    Cellular Encoding \citep{gruau1994neural} & Yes & Yes & Yes & Yes & Yes \\
+    Cascade-Correlation \citep{fahlman1990cascade} & No & No & No & Yes & No \\
+    LNDP \citep{plantec2024evolving} & Yes & Yes & No & Yes & No \\
+    GRN-SO-RC \citep{hajizada2024developmental} & Yes & Yes & No & Yes & No \\
+    Neural CA \citep{mordvintsev2020growing} & Yes & Yes & No & Yes & No \\
+    \textbf{\modnet{} (this work)} & \textbf{Yes} & \textbf{Yes}
+      & \textbf{Yes} & \textbf{Yes} & \textbf{Yes} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The distinguishing features of \modnet{} are: (i) no predefined layers or
+substrate geometry; (ii) recurrence as a first-class architectural primitive;
+(iii) modular structure whose size, count, and internal connectivity are all
+under evolutionary control; (iv) growth through both addition and pruning;
+and (v) no gradient information used at any stage of learning. To the best of
+our knowledge, no prior architecture simultaneously satisfies all five of
+these constraints.
+
+The remainder of this thesis describes the \modnet{} architecture
+(Chapter~\ref{ch:method}), the experimental setup (Chapter~\ref{ch:experiments}),
+and the results obtained on a suite of Boolean and continuous tasks
+(Chapter~\ref{ch:results}).

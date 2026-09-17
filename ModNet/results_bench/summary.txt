@@ -1,0 +1,19 @@
+==============================================================================
+BENCHMARK SUITE SUMMARY
+seed = 42   total time = 473.2s
+==============================================================================
+
+problem      kind               fit   acc/RMSE  size  rec  wires    time status  
+------------------------------------------------------------------------------
+xor2         boolean       -0.00000       100%     8    1     17    1.0s SOLVED  
+xor3         boolean       -0.00000       100%    26    8    117    3.2s SOLVED  
+parity4      boolean       -0.00000       100%    26    0     61    2.4s SOLVED  
+parity6      boolean       -0.03125        97%    11    8     71   58.7s PARTIAL 
+majority3    boolean       -0.00000       100%    26    6     52    0.2s SOLVED  
+majority5    boolean       -0.00000       100%     9    5     31    1.9s SOLVED  
+mux4to1      boolean       -0.00000       100%    27    3    177   27.7s SOLVED  
+sin2pi       regression    -0.00144     0.0380    27   11    313   63.0s SOLVED  
+sin4pi       regression    -0.00552     0.0743    27    8    308   68.6s PARTIAL 
+circle       regression    -0.00031     0.0177    27   11    313   44.1s SOLVED  
+gaussian     regression    -0.00160     0.0401    27    8    226   56.8s SOLVED  
+multiply     regression    -0.00077     0.0277    18   10    187   47.2s SOLVED  
