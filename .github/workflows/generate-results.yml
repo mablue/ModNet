@@ -6,6 +6,7 @@ on:
     paths:
       - 'ModNet.py'
       - '.github/workflows/generate-results.yml'
+      - 'requirements.txt'
 
 permissions:
   contents: read
@@ -25,12 +26,22 @@ jobs:
         with:
           python-version: '3.11'
           cache: pip
+          cache-dependency-path: requirements.txt
 
       - name: Install dependencies
-        run: python -m pip install --upgrade pip numpy
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Prepare output directory
+        run: mkdir -p results
 
       - name: Run ModNet experiments
-        run: python ModNet.py
+        run: |
+          set -euxo pipefail
+          python ModNet.py
+          ls -la
+          find results -maxdepth 2 -type f | sort | head -200
 
       - name: Upload generated files
         if: always()
