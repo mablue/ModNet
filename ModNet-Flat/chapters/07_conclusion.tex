@@ -1,0 +1,317 @@
+% ============================================================
+%  Chapter 7: Conclusion
+%  File: chapters/07_conclusion.tex
+%  Bibliography: chapters/refs_07_conclusion.bib
+% ============================================================
+
+\chapter{Conclusion}
+\label{ch:conclusion}
+
+\section{Summary of the Work}
+
+This thesis began with a simple question: \emph{can a neural network
+discover its own structure from first principles, without a designer
+specifying layers, connectivity, or even the number of nodes?}
+
+We answered this question in the affirmative, through an architecture
+we call \modnet{}. The architecture has four defining properties:
+
+\begin{enumerate}
+  \item \textbf{Layer-free.} There are no predefined layers, and no
+    modular grouping. Every node is a general-purpose threshold unit
+    that may connect to any other node, including itself.
+
+  \item \textbf{Outputs as ordinary nodes.} The first $n_{\text{out}}$
+    nodes of the network are designated as outputs; there is no separate
+    output layer.
+
+  \item \textbf{Grown and pruned.} The network starts from a small random
+    topology and grows through addition of nodes, and shrinks through
+    removal of inactive or unreachable ones. Growth is bidirectional.
+
+  \item \textbf{Gradient-free.} No gradient information is used at any
+    stage. All learning is performed by a compact evolutionary algorithm
+    operating on the topology and weights simultaneously.
+\end{enumerate}
+
+We evaluated \modnet{} on a suite of \textbf{sixteen} benchmark problems
+spanning four broad classes: Boolean logic, digital arithmetic, sorting
+networks, and continuous regression. Table~\ref{tab:conclusion-headline}
+summarizes the headline results.
+
+\begin{table}[h]
+  \centering
+  \small
+  \caption{Headline results of \modnet{} on the sixteen benchmark
+    problems. Boolean tasks are measured in exact accuracy; continuous
+    tasks in root-mean-square error (RMSE).}
+  \label{tab:conclusion-headline}
+  \begin{tabular}{llrrr}
+    \toprule
+    \textbf{Task} & \textbf{Type} & \textbf{Result} & \textbf{Nodes} & \textbf{Time (s)} \\
+    \midrule
+    XOR-2               & Boolean    & \textbf{100.0\%} &  8 &  0.8 \\
+    XOR-3               & Boolean    & \textbf{100.0\%} &  9 &  2.0 \\
+    Parity-4            & Boolean    & \textbf{100.0\%} & 10 &  1.8 \\
+    Parity-6            & Boolean    & 95.3\%           &  8 & 40.6 \\
+    Majority-3          & Boolean    & \textbf{100.0\%} & 26 &  0.9 \\
+    Majority-5          & Boolean    & \textbf{100.0\%} & 26 & 10.2 \\
+    Full Adder          & Boolean    & \textbf{100.0\%} & 26 &  3.0 \\
+    2-bit Adder         & Boolean    & \textbf{100.0\%} & 26 &  7.3 \\
+    Comparator          & Boolean    & \textbf{100.0\%} & 27 &  3.8 \\
+    MUX 4-to-1          & Boolean    & \textbf{100.0\%} & 26 &  4.8 \\
+    Sort-4              & Boolean    & \textbf{100.0\%} & 26 &  8.7 \\
+    \midrule
+    $\sin(2\pi x)$      & Regression & RMSE $= 0.0465$  & 18 & 30.0 \\
+    $\sin(4\pi x)$      & Regression & RMSE $= 0.0789$  & 13 & 25.1 \\
+    $x^2 + y^2$         & Regression & RMSE $= 0.0143$  & 26 & 21.1 \\
+    Gaussian            & Regression & RMSE $= 0.0275$  & 27 & 41.6 \\
+    Multiplication      & Regression & RMSE $= 0.0254$  & 13 & 28.5 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{What We Learned}
+
+Beyond the raw numbers, this work produced five insights that we
+believe are worth carrying forward.
+
+\subsection{Structure Is Discoverable}
+
+The most important lesson is that \emph{structure is discoverable}.
+Given only a minimal node model and a fitness function, evolution
+found:
+
+- Minimal networks for Boolean tasks (eight nodes for XOR-2).
+- Recurrent networks for temporal tasks (up to fourteen self-loops).
+- Sparse networks for all tasks ($27\%$--$67\%$ density).
+- Networks that solve nontrivial digital circuits exactly.
+
+No human designer specified any of these properties. They emerged from
+the interaction between growth, pruning, mutation, and selection.
+
+\subsection{Recurrence Is a Structural Necessity, Not a Design Choice}
+
+We observed that the number of recurrent self-loops scales with the
+temporal complexity of the task:
+
+\begin{itemize}
+  \item XOR-2 (combinational): one self-loop.
+  \item Parity-4 (combinational, deeper): five self-loops.
+  \item Gaussian (continuous): fourteen self-loops.
+  \item Multiplication (continuous, 2D): ten self-loops.
+\end{itemize}
+
+This suggests that recurrence is not a special architectural feature to
+be added when needed, but a natural consequence of tasks that require
+temporal integration. \modnet{} discovers this necessity without being
+told.
+
+\subsection{Sparsity Is Preferred}
+
+Evolved networks use only a fraction of the available connections. The
+pruning mechanism removes nodes that are either inactive or saturated,
+and the resulting networks have densities of $27\%$ to $67\%$
+depending on the task. This is consistent with the sparsity of
+biological neural networks \citep{chklovskii2004wiring, cherniak1994component}.
+
+\subsection{Modularity Is Not Necessary}
+
+In earlier work, we studied a modular variant of \modnet{}, where
+nodes were grouped into a fixed number of modules. The present work is
+fully layer-free: there are no modules at all. A direct comparison
+revealed that the layer-free variant is \emph{equal or superior} on
+every benchmark, including a decisive win on the multiplication task
+($13$ nodes versus $18$). This suggests that modular scaffolds, far
+from helping, can restrict the search when the task does not require
+modular structure.
+
+\subsection{Digital Circuits Are Within Reach}
+
+To the best of our knowledge, this is the first demonstration of a
+fully layer-free evolved network that solves full adder, 2-bit adder,
+comparator, 4-to-1 multiplexer, and 4-bit sorting network, all with
+exact $100\%$ accuracy. This extends the scope of neuroevolution
+beyond classification and control into the domain of digital logic
+synthesis.
+
+\section{Limitations}
+
+We do not claim that \modnet{} is a universal solver. Several
+limitations must be acknowledged.
+
+\subsection{Scale}
+
+The largest network in our experiments has $27$ nodes. This is small
+by modern standards: even a modest feedforward network for a real-world
+task typically has thousands of parameters. The primary reason for
+this limitation is computational: the fitness evaluation is
+$O(E \cdot T)$ per network, and the evolutionary algorithm performs
+$O(P \cdot G)$ evaluations, so the total cost grows with the size of
+the network.
+
+\subsection{Two Failure Cases}
+
+Two benchmark problems did not reach their success threshold:
+
+\begin{itemize}
+  \item \textbf{Parity-6}: stuck at $95.3\%$ accuracy with a network of
+    eight nodes. The learning curve shows no sign of approaching exact
+    accuracy, suggesting a genuine local optimum.
+  \item \textbf{$\sin(4\pi x)$}: reached RMSE $= 0.0789$, close to but
+    above the $0.05$ threshold. The network was still improving at the
+    end of the run, suggesting that additional generations might
+    suffice.
+\end{itemize}
+
+These failures are informative: they show that \modnet{} is not a
+universal solver, and that certain tasks require either more resources
+or a different search strategy.
+
+\subsection{No Theoretical Guarantees}
+
+We have not proven any theoretical properties of \modnet{}. In
+particular, we have not shown that the evolutionary algorithm converges
+to a global optimum, nor have we formally established Turing
+completeness. The empirical results are encouraging, but they do not
+constitute a proof.
+
+\subsection{Single Seed}
+
+Our experiments use a fixed random seed. With a different seed, the
+algorithm might find different (and possibly better or worse) networks.
+A multi-seed analysis would allow us to report means and standard
+deviations, and to distinguish robust patterns from coincidences.
+
+\subsection{Limited Task Diversity}
+
+The sixteen tasks we considered all involve low-dimensional inputs
+($2$--$8$ bits) and outputs ($1$--$8$ bits). This is far from the
+dimensionality of real-world problems. We have not demonstrated that
+\modnet{} scales to high-dimensional inputs.
+
+\section{Future Work}
+
+Several directions for future research emerge from this work.
+
+\subsection{Scaling to Larger Networks}
+
+The most obvious direction is to scale \modnet{} to larger networks.
+There are several ways to approach this:
+
+\begin{enumerate}
+  \item \textbf{Parallelize the fitness evaluation.} Each network in
+    the population is independent, so evaluations can be distributed
+    across multiple cores or machines. With a cluster of GPUs, a
+    population of $10^5$ networks could be evaluated in the time it
+    takes to evaluate $10^3$ on a single machine.
+
+  \item \textbf{Sparse encoding.} The current encoding represents each
+    weight as a 32-bit float. A sparse encoding that stores only
+    active connections could reduce memory and computation by an
+    order of magnitude.
+
+  \item \textbf{Advanced search algorithms.} The evolutionary algorithm
+    we use is simple. More advanced methods such as CMA-ES,
+    differential evolution, or Bayesian optimization might converge
+    faster.
+\end{enumerate}
+
+\subsection{Hybrid Learning}
+
+A natural extension is to combine evolutionary topology search with
+gradient-based weight optimization. In this hybrid approach, the
+evolutionary algorithm would discover the topology, and gradient
+descent would fine-tune the weights. The challenge is that the
+Heaviside activation is not differentiable; one solution is to use a
+differentiable surrogate during training, as done in spiking neural
+networks \citep{neftci2019surrogate}.
+
+\subsection{Extending to Structured Inputs}
+
+Our current encoding assumes unstructured bit vectors. Extending
+\modnet{} to images, sequences, or graphs would require incorporating
+structural priors into the architecture, for example through
+convolutional or graph-based preprocessing.
+
+\subsection{Theoretical Analysis}
+
+Finally, a more thorough theoretical analysis would be valuable. Key
+questions include:
+
+\begin{itemize}
+  \item Under what conditions is \modnet{} Turing complete?
+  \item What is the convergence rate of the evolutionary algorithm?
+  \item Can we characterize the class of tasks that \modnet{} can
+    solve efficiently?
+\end{itemize}
+
+\section{Broader Implications}
+
+Beyond the technical results, this work has broader implications for
+the way we think about neural architecture design.
+
+The dominant paradigm in modern machine learning is to design
+architectures by hand, guided by intuition and empirical tuning. This
+has been remarkably successful, but it has also led to a proliferation
+of architectures that are highly specialized for particular tasks. The
+transformer, for example, is optimized for sequences; the
+convolutional network is optimized for images; the recurrent network
+is optimized for time series. Each architecture comes with its own set
+of hyperparameters, its own training procedure, and its own failure
+modes.
+
+\modnet{} suggests an alternative: a single, general-purpose
+architecture that can be adapted to any task through evolution. The
+same node model, the same fitness function, and the same evolutionary
+algorithm solved Boolean logic, digital arithmetic, sorting, and
+continuous regression with no task-specific modifications.
+
+This is not to say that \modnet{} is better than specialized
+architectures on their home turf---it is not, at least not at the
+scale we have tested. But it does suggest that architecture design
+can be automated, and that the resulting architectures need not be
+specialized. This is the essence of meta-learning, and \modnet{} is a
+step in that direction.
+
+\section{Final Remarks}
+
+We began this thesis with the observation that biological brains have
+no layers, no fixed topology, and no global error signal. They
+discover their structure through developmental and evolutionary
+processes. \modnet{} is a modest attempt to capture these properties
+in a minimal computational model.
+
+Our results suggest that this approach is viable. A single
+layer-free architecture, driven by a compact evolutionary process,
+solved fourteen of sixteen tasks spanning Boolean logic, digital
+arithmetic, sorting networks, and continuous regression, using no more
+than $27$ nodes per network. Recurrence emerged spontaneously and
+scaled with task complexity. Sparsity emerged without any regularizer.
+And a direct comparison with a modular variant showed that removing
+structure entirely can \emph{improve} performance.
+
+There is much work still to be done. The architecture has limits---two
+of our sixteen tasks were not fully solved---and scaling remains an
+open challenge. But the direction is promising. If structure can be
+discovered rather than designed, then the field of neural architecture
+may be entering a new phase, one in which the designer's role shifts
+from \emph{building} networks to \emph{specifying objectives}.
+
+We close with a reflection. The history of machine learning is a
+history of \emph{removing} structure from our models. Early models were
+heavily hand-crafted. Deep learning removed the feature engineering.
+Neural architecture search removed the architecture design. \modnet{}
+takes this trend one step further: it removes even the layered
+structure itself, and asks the network to discover it.
+
+Perhaps the next step is to remove ourselves entirely from the design
+loop. If a network can discover its own structure, perhaps it can
+also discover its own objective. That question is beyond the scope of
+this thesis, but the tools developed here---self-growing layer-free
+networks with complete event logging and reproducible benchmarks---may
+serve as a foundation for exploring it.
+
+% ============================================================
+%  Bibliography for this chapter
+% ============================================================

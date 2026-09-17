@@ -1,0 +1,478 @@
+% ============================================================
+%  Chapter 4: Experimental Setup
+%  File: chapters/04_experiments.tex
+%  Bibliography: chapters/refs_04_setup.bib
+% ============================================================
+
+\chapter{Experimental Setup}
+\label{ch:experiments}
+
+This chapter describes the experimental protocol used to evaluate
+\modnet{}. We begin with the sixteen benchmark problems, then describe
+the data encoding, the evaluation procedure, the hyperparameter choices,
+the visualization method, and finally the reproducibility of the
+experiments.
+
+% ------------------------------------------------------------
+\section{Benchmark Problems}
+\label{sec:exp-tasks}
+% ------------------------------------------------------------
+
+We evaluate \modnet{} on sixteen tasks that span four broad classes:
+
+\begin{enumerate}
+  \item \textbf{Boolean logic:} XOR-2, XOR-3, Parity-4, Parity-6.
+  \item \textbf{Majority functions:} Majority-3, Majority-5.
+  \item \textbf{Digital arithmetic and circuits:} Full Adder, 2-bit
+    Adder, Comparator, 4-to-1 Multiplexer, 4-bit Sorting Network.
+  \item \textbf{Continuous regression:} $\sin(2\pi x)$, $\sin(4\pi x)$,
+    $x^2 + y^2$, Gaussian, Multiplication.
+\end{enumerate}
+
+The tasks were chosen to cover a spectrum of difficulty, from problems
+that are trivially solvable by a single linear unit (XOR-2) to problems
+that require multi-stage nonlinear computation and non-monotone Boolean
+logic (Parity-6, 4-bit sorting). Table~\ref{tab:all-tasks} summarizes
+the tasks.
+
+\begin{table}[h]
+  \centering
+  \small
+  \caption{Summary of the sixteen benchmark problems.}
+  \label{tab:all-tasks}
+  \begin{tabular}{llrrrl}
+    \toprule
+    \textbf{Task} & \textbf{Class} & $n_{\text{in}}$ & $n_{\text{out}}$
+      & $N$ & \textbf{Description} \\
+    \midrule
+    XOR-2        & Boolean    & 2 & 1 &  4 & $a \oplus b$ \\
+    XOR-3        & Boolean    & 3 & 1 &  8 & $a \oplus b \oplus c$ \\
+    Parity-4     & Boolean    & 4 & 1 & 16 & $\bigoplus_{i=1}^4 x_i$ \\
+    Parity-6     & Boolean    & 6 & 1 & 64 & $\bigoplus_{i=1}^6 x_i$ \\
+    \midrule
+    Majority-3   & Boolean    & 3 & 1 &  8 & $\sum x_i \geq 2$ \\
+    Majority-5   & Boolean    & 5 & 1 & 32 & $\sum x_i \geq 3$ \\
+    \midrule
+    Full Adder   & Boolean    & 3 & 2 &  8 & $s = a \oplus b \oplus c$, $c_{\text{out}} = a b + b c + a c$ \\
+    2-bit Adder  & Boolean    & 4 & 3 & 16 & $(a_0 + 2 a_1) + (b_0 + 2 b_1)$ \\
+    Comparator   & Boolean    & 2 & 3 &  4 & $(\text{gt}, \text{eq}, \text{lt})$ one-hot \\
+    MUX 4-to-1   & Boolean    & 6 & 1 & 64 & $d_{s_0 + 2 s_1}$ \\
+    Sort-4       & Boolean    & 4 & 4 & 16 & $(\min, \ldots, \max)$ of 4 bits \\
+    \midrule
+    $\sin(2\pi x)$     & Regression & 4 & 8 & 32 & $0.5 + 0.5 \sin(2\pi x)$ \\
+    $\sin(4\pi x)$     & Regression & 4 & 8 & 32 & $0.5 + 0.5 \sin(4\pi x)$ \\
+    $x^2 + y^2$        & Regression & 8 & 8 & 25 & $0.5 + 0.25 (x_1^2 + x_2^2)$ \\
+    Gaussian           & Regression & 4 & 8 & 25 & $\exp(-x^2)$ on $[-1,1]$ \\
+    Multiplication     & Regression & 8 & 8 & 36 & $x \cdot y$ for $x,y \in [0,1]$ \\
+    \bottomrule
+  \end{tabular}
+  \vspace{0.3em}
+  \par\footnotesize{$N$ denotes the number of training samples.}
+\end{table}
+
+\subsection{Boolean Function Learning}
+\label{sec:exp-boolean}
+
+Boolean function learning is a natural testbed because the fitness
+function is exact (no measurement noise) and correctness is unambiguous.
+
+\paragraph{XOR-2 and XOR-3.} The exclusive-or of two or three bits. XOR
+is the canonical example of a non-linearly-separable Boolean function:
+no single linear threshold unit can compute it
+\citep{minsky1969perceptrons}.
+
+\paragraph{Parity-4 and Parity-6.} The parity of $n$ bits,
+$\text{Parity}_n(\mathbf{x}) = \bigoplus_{i=1}^{n} x_i$. Parity is the
+XOR of $n$ bits and is the simplest Boolean function that is provably
+hard for bounded-depth threshold circuits: any depth-$d$ circuit that
+computes parity requires $\Omega(n^{1+\varepsilon_d})$ wires
+\citep{impagliazzo1997size}. The number of input--output pairs grows
+exponentially with $n$.
+
+\paragraph{Majority-3 and Majority-5.} The majority function returns
+$1$ if and only if the number of active bits exceeds $n/2$. Unlike
+parity, majority is monotone: flipping any input from $0$ to $1$
+cannot decrease the output.
+
+\subsection{Digital Circuits}
+\label{sec:exp-circuits}
+
+The digital circuit tasks exercise \modnet{} on problems that are
+canonical in hardware design. Each is a well-defined Boolean function
+with a known minimal circuit.
+
+\paragraph{Full Adder.} Three inputs $(a, b, c_{\text{in}})$, two
+outputs $(\text{sum}, c_{\text{out}})$. The sum is XOR of the three
+inputs; the carry-out is the majority.
+
+\paragraph{2-bit Adder.} Four inputs $(a_0, a_1, b_0, b_1)$, three
+outputs $(s_0, s_1, c_{\text{out}})$. Represents the addition of two
+2-bit numbers.
+
+\paragraph{Comparator.} Two inputs $(a, b)$, three one-hot outputs:
+whether $a > b$, $a = b$, or $a < b$.
+
+\paragraph{4-to-1 Multiplexer.} Six inputs (four data lines
+$d_0, \ldots, d_3$, two select lines $s_0, s_1$), one output: the data
+line selected by the two select bits.
+
+\paragraph{4-bit Sorting Network.} Four inputs, four outputs: the
+inputs sorted in ascending order. This is nontrivial because sorting
+is \emph{non-monotone} in each input bit.
+
+\subsection{Continuous Regression}
+\label{sec:exp-regression}
+
+Regression tasks test whether \modnet{} can produce smooth, graded
+outputs rather than binary decisions.
+
+\paragraph{$\sin(2\pi x)$ and $\sin(4\pi x)$.} Two sinusoids over the
+unit interval, normalized to $[0, 1]$. The second has twice the
+frequency of the first.
+
+\paragraph{$x^2 + y^2$.} A two-dimensional quadratic surface. We sample
+a $5 \times 5$ grid over $[0,1]^2$.
+
+\paragraph{Gaussian.} The function $\exp(-x^2)$ on $[-1, 1]$, normalized
+to $[0, 1]$.
+
+\paragraph{Multiplication.} The product $x \cdot y$ for $x, y \in [0,1]$.
+We sample a $6 \times 6$ grid, giving $36$ points.
+
+% ------------------------------------------------------------
+\section{Data Encoding}
+\label{sec:exp-encoding}
+% ------------------------------------------------------------
+
+Inputs and outputs of \modnet{} are binary vectors. Continuous values
+are quantized to a fixed number of bits.
+
+\subsection{Boolean Inputs}
+
+For Boolean tasks, each input bit is passed directly to the network as
+a $0$ or $1$ value. No encoding is required.
+
+\subsection{Continuous Inputs}
+
+For regression tasks, each continuous input variable $x \in [0, 1]$
+is quantized to $b$ bits as follows. Let
+$v = \lfloor x \cdot (2^b - 1) \rceil$ be the rounded integer in
+$[0, 2^b - 1]$. The bit vector is then
+
+\begin{equation}
+  \text{encode}(x, b) =
+    \left(
+      \lfloor v / 2^0 \rfloor \bmod 2,\,
+      \lfloor v / 2^1 \rfloor \bmod 2,\,
+      \ldots,\,
+      \lfloor v / 2^{b-1} \rfloor \bmod 2
+    \right).
+  \label{eq:encode}
+\end{equation}
+
+We use $b = 4$ bits for inputs, giving $2^4 = 16$ distinct input
+levels per variable. This is a coarse quantization, deliberately
+chosen to keep the input space small enough for exhaustive evaluation.
+
+\subsection{Outputs}
+
+For Boolean tasks, outputs are single bits or short bit-vectors
+(for multi-output circuits, up to $4$ bits). For regression tasks,
+outputs are quantized to $b = 8$ bits, giving $2^8 = 256$ distinct
+output levels. The decoding function is the inverse of
+Equation~\ref{eq:encode}:
+
+\begin{equation}
+  \text{decode}(\mathbf{y}) =
+    \frac{1}{2^b - 1} \sum_{i=0}^{b-1} y_i \cdot 2^i.
+  \label{eq:decode}
+\end{equation}
+
+The choice of $8$ bits for outputs is a trade-off between resolution
+and computational cost. With $8$ bits, the quantization error is at
+most $1/255 \approx 0.004$, well below the RMSE values we report.
+
+% ------------------------------------------------------------
+\section{Evaluation Procedure}
+\label{sec:exp-eval}
+% ------------------------------------------------------------
+
+Each network is evaluated on the full training set
+$\mathcal{D} = \{(\mathbf{x}^{(k)}, \mathbf{y}^{(k)})\}_{k=1}^{K}$.
+The network is initialized with all node activations set to zero, the
+input is applied at the designated input nodes, and the network is run
+for $T$ time steps. The output is read from the output nodes.
+
+The fitness value is computed using the mean squared error between
+the predicted output and the target. For single-output Boolean tasks
+and all regression tasks, this is a scalar comparison; for
+multi-output Boolean tasks, it is a bit-level comparison.
+
+An experiment is considered \emph{solved} when:
+
+\begin{itemize}
+  \item \textbf{Boolean tasks.} All $K$ training samples are classified
+    correctly (exact $100\%$ accuracy).
+  \item \textbf{Regression tasks.} The root-mean-square error is below
+    a task-specific threshold. We use RMSE $< 0.05$ for all regression
+    tasks except $\sin(4\pi x)$, for which the higher frequency
+    requires RMSE $< 0.10$.
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{Hyperparameter Settings}
+\label{sec:exp-hp}
+% ------------------------------------------------------------
+
+The hyperparameters of \modnet{} are listed in
+Table~\ref{tab:hp-setup}. Unless otherwise noted, all tasks use the
+same values.
+
+\begin{table}[h]
+  \centering
+  \small
+  \caption{Hyperparameters of \modnet{} used in all experiments.}
+  \label{tab:hp-setup}
+  \begin{tabular}{lll}
+    \toprule
+    \textbf{Parameter} & \textbf{Description} & \textbf{Value} \\
+    \midrule
+    $P$                & Population size                    & 300 \\
+    $G$                & Maximum generations                & 400--1500 \\
+    $p_{\text{cross}}$ & Crossover rate                     & 0.30 \\
+    $p_{\text{fresh}}$ & Fresh random rate                  & 0.05 \\
+    $\sigma_{\text{base}}$ & Base mutation scale           & 0.30 \\
+    $\sigma_{\max}$    & Maximum mutation scale             & 1.50 \\
+    $\gamma$           & Mutation growth factor             & 1.25 \\
+    $g_{\text{thresh}}$& Plateau threshold (generations)    & 25 \\
+    $g_{\text{birth}}$ & Birth interval (generations)       & 100 \\
+    $g_{\text{prune}}$ & Prune interval (generations)       & 20 \\
+    $\epsilon_{\text{prune}}$ & Prune tolerance             & $-0.001$ \\
+    $w_{\text{thresh}}$& Weight pruning threshold           & 0.04 \\
+    $\alpha_{\text{lo}}$& Lower activity threshold          & 0.02 \\
+    $\alpha_{\text{hi}}$& Upper activity threshold          & 0.98 \\
+    $n_{\text{hidden,min}}$& Minimum hidden nodes          & 2 \\
+    $n_{\max}$         & Maximum nodes                      & 60 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Task-specific settings of the number of time steps $T$, the number of
+initial nodes, and the maximum number of generations are listed in
+Table~\ref{tab:task-hp}.
+
+\begin{table}[h]
+  \centering
+  \small
+  \caption{Task-specific hyperparameters. $T$ is the number of time
+    steps per evaluation, $n_0$ is the initial number of nodes,
+    $G_{\max}$ is the maximum number of generations.}
+  \label{tab:task-hp}
+  \begin{tabular}{lrrr}
+    \toprule
+    \textbf{Task} & $T$ & $n_0$ & $G_{\max}$ \\
+    \midrule
+    XOR-2         & 4 & 26 &  400 \\
+    XOR-3         & 5 & 26 &  600 \\
+    Parity-4      & 6 & 26 &  800 \\
+    Parity-6      & 8 & 26 & 1500 \\
+    Majority-3    & 5 & 26 &  500 \\
+    Majority-5    & 7 & 26 &  900 \\
+    Full Adder    & 6 & 26 &  800 \\
+    2-bit Adder   & 8 & 26 & 1200 \\
+    Comparator    & 6 & 26 &  600 \\
+    MUX 4-to-1    & 8 & 26 & 1200 \\
+    Sort-4        & 8 & 26 & 1200 \\
+    $\sin(2\pi x)$& 5 & 26 & 1500 \\
+    $\sin(4\pi x)$& 6 & 26 & 1500 \\
+    $x^2 + y^2$   & 6 & 26 & 1200 \\
+    Gaussian      & 5 & 26 & 1500 \\
+    Multiplication& 6 & 26 & 1500 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The number of time steps $T$ is set based on the depth of the required
+computation. Boolean tasks with more inputs require more steps to
+propagate information through the network; regression tasks with
+periodic outputs require additional steps to resolve the periodicity.
+
+All experiments start from an initial network of $n_0 = 26$ nodes
+(one output for single-output tasks, eight outputs for regression, two
+to four outputs for multi-output Boolean). All nodes may connect to
+any other node, including themselves.
+
+% ------------------------------------------------------------
+\section{Network Visualization}
+\label{sec:exp-viz}
+% ------------------------------------------------------------
+
+To make the evolved topologies interpretable, we render every network
+using a \emph{force-directed} (spring) layout implemented in the
+\texttt{networkx} library \citep{hagberg2008exploring}. The spring
+layout treats each edge as an attractive force and each node as a
+repulsive force, causing the graph to settle into a stable
+configuration in which topologically related nodes appear nearby.
+
+Nodes are colored by role:
+
+\begin{itemize}
+  \item \textbf{Green squares:} input ports, labeled $x_0, x_1, \ldots$
+  \item \textbf{Blue circles:} hidden nodes, labeled $n_i$
+  \item \textbf{Red circles:} output nodes, labeled $n_i$ and marked
+    with an ``out'' arrow
+\end{itemize}
+
+Edges are colored by type:
+
+\begin{itemize}
+  \item \textbf{Green:} input edges (from input ports to nodes)
+  \item \textbf{Blue:} internal edges (between nodes)
+  \item \textbf{Red arcs:} self-loops (recurrent connections)
+\end{itemize}
+
+This visualization is used throughout Chapter~\ref{ch:results} to
+present the evolved networks. Figure~\ref{fig:viz-example} shows an
+example for the XOR-2 task.
+
+\begin{figure}[h]
+  \centering
+  \safeincludegraphics[width=0.6\textwidth]{xor2/best_spring.png}
+  \caption{Spring-layout visualization of the XOR-2 network. Green
+    squares are input ports, blue circles are hidden nodes, red circles
+    are output nodes. The single self-loop is shown as a red arc. The
+    network has $8$ nodes and $17$ active connections.}
+  \label{fig:viz-example}
+\end{figure}
+
+% ------------------------------------------------------------
+\section{Reproducibility}
+\label{sec:exp-repro}
+% ------------------------------------------------------------
+
+All experiments use a fixed random seed of $42$, reset before each
+task to ensure that the results for one task do not depend on the
+order of execution. The seed is used to initialize the population and
+to control all subsequent stochastic operations (mutation, crossover,
+and selection of parents).
+
+Each experiment produces the following outputs:
+
+\begin{itemize}
+  \item \texttt{best.json}: the complete evolved network, including
+    all weights, biases, and node roles.
+  \item \texttt{best\_spring.png}: a spring-layout rendering of the
+    final network.
+  \item \texttt{snapshot\_gen\_XXXX.png}: snapshots of the best
+    network at selected generations, showing how the structure
+    evolved.
+  \item \texttt{curve.csv} and \texttt{curve.svg}: the fitness history
+    over all generations (where applicable).
+  \item \texttt{samples.csv}: the network's predictions on all
+    training samples.
+  \item \texttt{events.log} and \texttt{events.csv}: a complete log
+    of every birth and prune operation, with timestamps (where
+    applicable).
+\end{itemize}
+
+The complete experimental framework is implemented in a single Python
+script and is available as open-source software
+\citep{modnet2026code}. The script has no external dependencies beyond
+NumPy, and optionally \texttt{networkx} and \texttt{matplotlib} for
+visualization. It runs on commodity hardware, including mobile phones.
+
+% ------------------------------------------------------------
+\section{Computational Cost}
+\label{sec:exp-cost}
+% ------------------------------------------------------------
+
+The total wall-clock time for all sixteen experiments is
+approximately $320$ seconds on a single phone CPU (ARM Cortex-A78,
+$2.4$~GHz, $8$ cores). The breakdown is shown in
+Table~\ref{tab:time}.
+
+\begin{table}[h]
+  \centering
+  \small
+  \caption{Wall-clock time per task, sorted by ascending time.}
+  \label{tab:time}
+  \begin{tabular}{lrr}
+    \toprule
+    \textbf{Task} & \textbf{Time (s)} & \textbf{Generations} \\
+    \midrule
+    XOR-2         &  0.8 &   43 \\
+    Majority-3    &  0.9 &   44 \\
+    Parity-4      &  1.8 &   99 \\
+    XOR-3         &  2.0 &  130 \\
+    Full Adder    &  3.0 &  156 \\
+    Comparator    &  3.8 &  251 \\
+    MUX 4-to-1    &  4.8 &  118 \\
+    2-bit Adder   &  7.3 &  350 \\
+    Sort-4        &  8.7 &  417 \\
+    Majority-5    & 10.2 &  291 \\
+    $x^2 + y^2$   & 21.1 &  862 \\
+    $\sin(4\pi x)$& 25.1 & 1499 \\
+    Multiplication& 28.5 & 1499 \\
+    $\sin(2\pi x)$& 30.0 & 1499 \\
+    Parity-6      & 40.6 & 1499 \\
+    Gaussian      & 41.6 & 1499 \\
+    \midrule
+    \textbf{Total} & \textbf{320.2} & \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The time scales roughly with the difficulty of the task: XOR-2 and
+Majority-3 finish in under one second, while Parity-6, Gaussian, and
+the sinusoid tasks require tens of seconds. The longest-running
+tasks use the highest number of generations and the largest evolved
+networks.
+
+The computational cost of a single evaluation is $O(E \cdot T)$, where
+$E$ is the number of active connections and $T$ is the number of time
+steps. For the largest network in our experiments ($N = 27$ nodes,
+$E \approx 350$ active connections, $T = 5$ time steps), a single
+evaluation takes approximately $50\,\mu$s. Since the evolutionary
+algorithm performs $P \cdot G \approx 300 \cdot 1500 = 4.5 \times
+10^5$ evaluations, the total compute for the longest task is on the
+order of $20$ seconds of pure evaluation time.
+
+% ------------------------------------------------------------
+\section{Summary of Reproducibility Artifacts}
+\label{sec:exp-artifacts}
+% ------------------------------------------------------------
+
+Table~\ref{tab:artifacts} lists the reproducibility artifacts
+produced by each experiment.
+
+\begin{table}[h]
+  \centering
+  \small
+  \caption{Reproducibility artifacts per task.}
+  \label{tab:artifacts}
+  \begin{tabular}{lp{9cm}}
+    \toprule
+    \textbf{Artifact} & \textbf{Description} \\
+    \midrule
+    \texttt{best.json}         & Complete network state (weights,
+      biases, output indices) in JSON format. \\
+    \texttt{best\_spring.png}  & Force-directed (spring) layout of
+      the final network. \\
+    \texttt{snapshot\_gen\_XXXX.png} & Snapshots of the best network
+      at five selected generations. \\
+    \texttt{curve.csv}         & Fitness, recursive count, node count,
+      and wire count at each generation. \\
+    \texttt{samples.csv}       & Predictions on all training samples. \\
+    \texttt{events.log}        & Human-readable log of every birth and
+      prune operation. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+These artifacts allow full reproduction and inspection of every
+evolved network, and were used to generate all figures and tables
+reported in Chapter~\ref{ch:results}.
+
+% ============================================================
+%  Bibliography for this chapter
+% ============================================================

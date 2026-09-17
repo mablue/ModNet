@@ -1,0 +1,313 @@
+% ============================================================
+%  ModNet.Flat.tex
+%  ModNet: A Self-Growing Layer-Free Recurrent Network
+%  for Universal Computation
+%
+%  Flat architecture (no modules) with full event logging.
+%
+%  Compilation:
+%    tectonic ModNet.Flat.tex
+%
+%  Each chapter has its own bibliography file:
+%    refs_01_intro.bib, refs_02_related.bib, ...
+%  The `chapterbib` package handles per-chapter bibliographies.
+% ============================================================
+
+\documentclass[11pt,a4paper]{report}
+
+% ------------------------------------------------------------
+%  Encoding & Language
+% ------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+
+% ------------------------------------------------------------
+%  Unicode character fallbacks (for T1 fonts)
+% ------------------------------------------------------------
+\usepackage{newunicodechar}
+\newunicodechar{—}{---}
+\newunicodechar{–}{--}
+\newunicodechar{−}{\ensuremath{-}}
+\newunicodechar{…}{\ldots}
+\newunicodechar{“}{``}
+\newunicodechar{”}{''}
+\newunicodechar{‘}{`}
+\newunicodechar{’}{'}
+\newunicodechar{≈}{\ensuremath{\approx}}
+\newunicodechar{≥}{\ensuremath{\geq}}
+\newunicodechar{≤}{\ensuremath{\leq}}
+\newunicodechar{×}{\ensuremath{\times}}
+\newunicodechar{÷}{\ensuremath{\div}}
+\newunicodechar{±}{\ensuremath{\pm}}
+\newunicodechar{⊕}{\ensuremath{\oplus}}
+\newunicodechar{⊗}{\ensuremath{\otimes}}
+\newunicodechar{→}{\ensuremath{\rightarrow}}
+\newunicodechar{←}{\ensuremath{\leftarrow}}
+\newunicodechar{↔}{\ensuremath{\leftrightarrow}}
+\newunicodechar{∈}{\ensuremath{\in}}
+\newunicodechar{∑}{\ensuremath{\sum}}
+\newunicodechar{∏}{\ensuremath{\prod}}
+\newunicodechar{√}{\ensuremath{\sqrt{}}}
+\newunicodechar{∞}{\ensuremath{\infty}}
+\newunicodechar{α}{\ensuremath{\alpha}}
+\newunicodechar{β}{\ensuremath{\beta}}
+\newunicodechar{γ}{\ensuremath{\gamma}}
+\newunicodechar{δ}{\ensuremath{\delta}}
+\newunicodechar{ε}{\ensuremath{\varepsilon}}
+\newunicodechar{θ}{\ensuremath{\theta}}
+\newunicodechar{λ}{\ensuremath{\lambda}}
+\newunicodechar{μ}{\ensuremath{\mu}}
+\newunicodechar{π}{\ensuremath{\pi}}
+\newunicodechar{ρ}{\ensuremath{\rho}}
+\newunicodechar{σ}{\ensuremath{\sigma}}
+\newunicodechar{τ}{\ensuremath{\tau}}
+\newunicodechar{φ}{\ensuremath{\varphi}}
+\newunicodechar{ψ}{\ensuremath{\psi}}
+\newunicodechar{ω}{\ensuremath{\omega}}
+\newunicodechar{Δ}{\ensuremath{\Delta}}
+\newunicodechar{Σ}{\ensuremath{\Sigma}}
+\newunicodechar{Ω}{\ensuremath{\Omega}}
+\newunicodechar{·}{\ensuremath{\cdot}}
+
+% ------------------------------------------------------------
+%  Typography & Layout
+% ------------------------------------------------------------
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{geometry}
+\geometry{margin=1in}
+\linespread{1.05}
+
+% ------------------------------------------------------------
+%  Math
+% ------------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% ------------------------------------------------------------
+%  Graphics
+% ------------------------------------------------------------
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[section]{placeins}
+
+% ------------------------------------------------------------
+%  TikZ & PGFPlots
+% ------------------------------------------------------------
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric, fit, backgrounds}
+
+% ------------------------------------------------------------
+%  Tables
+% ------------------------------------------------------------
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{csvsimple}
+
+% ------------------------------------------------------------
+%  Algorithms
+% ------------------------------------------------------------
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% ------------------------------------------------------------
+%  Code listings
+% ------------------------------------------------------------
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  showstringspaces=false,
+  keywordstyle=\color{blue!70!black},
+  commentstyle=\color{green!50!black},
+  stringstyle=\color{red!70!black},
+}
+
+% ------------------------------------------------------------
+%  Per-chapter bibliographies
+%  Each chapter file ends with:
+%    \bibliographystyle{plainnat}
+%    \bibliography{refs_XX_chaptername}
+%  and provides its own .bib file in the same directory.
+% ------------------------------------------------------------
+% (chapterbib removed by patch v6 — using single bibliography)
+\usepackage[numbers,sort&compress]{natbib}
+
+% ------------------------------------------------------------
+%  Hyperlinks
+% ------------------------------------------------------------
+\usepackage[colorlinks=true,
+            linkcolor=blue!60!black,
+            citecolor=blue!60!black,
+            urlcolor=blue!60!black]{hyperref}
+
+% ------------------------------------------------------------
+%  Theorem environments
+% ------------------------------------------------------------
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ------------------------------------------------------------
+%  Custom commands
+% ------------------------------------------------------------
+\newcommand{\modnet}{\textsc{ModNet}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\B}{\mathbb{B}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+\newcommand{\mat}[1]{\mathbf{#1}}
+
+% ------------------------------------------------------------
+%  Figure paths
+%  All benchmark outputs live under results_bench_v2/
+%  Each problem has:
+%    best_spring.png           - spring-layout graph of the final net
+%    snapshot_gen_XXXX.png     - snapshots at selected generations
+% ------------------------------------------------------------
+\graphicspath{
+  {results_bench_v2/}
+  {figures/}
+}
+
+% ============================================================
+
+% -------------------------------------------------------------
+%  Safe includegraphics: placeholder box if the file is missing.
+%  \IfFileExists does NOT consult \graphicspath, so we check
+%  the full path under results_bench_v2/.
+% -------------------------------------------------------------
+\newcommand{\safeincludegraphics}[2][]{%
+  \IfFileExists{results_bench_v2/#2}%
+    {\includegraphics[#1]{#2}}%
+    {\fbox{\parbox[c][3cm][c]{0.6\linewidth}{%
+       \centering\ttfamily\small
+       [missing figure: \detokenize{#2}]}}}%
+}
+
+\begin{document}
+
+% ------------------------------------------------------------
+%  Title page
+% ------------------------------------------------------------
+\title{%
+  \textbf{ModNet: A Self-Growing Layer-Free Recurrent Network\\[0.3em]
+  for Universal Computation}\\[1em]
+  \large An evolutionary framework that discovers structure
+  from first principles
+}
+
+\author{%
+  Masoud Azizi\thanks{Corresponding author.
+    Email: \texttt{mablue92@gmail.com}} \\[0.5em]
+  \small Department of Computer Science \\
+  \small Faculty of Mathematical Sciences \\
+  \small University of Tabriz \\
+  \small Tabriz, Iran
+}
+
+\date{\today}
+
+\maketitle
+
+% ------------------------------------------------------------
+%  Abstract
+% ------------------------------------------------------------
+\begin{abstract}
+\noindent
+We present \modnet{}, a self-growing layer-free recurrent network
+whose topology is discovered through evolution rather than imposed
+by a designer. The architecture has no predefined layers and no
+modular grouping: every node is a general-purpose threshold unit
+that may receive input from any other node, including itself, and
+the first $n_{\text{out}}$ nodes of the network are designated as
+outputs. Starting from a minimal random topology, the network grows,
+prunes, and reorganizes itself through a compact evolutionary loop.
+
+We evaluate \modnet{} on a suite of sixteen benchmark problems
+spanning Boolean logic, digital arithmetic, sorting networks, and
+continuous regression. The network solves fourteen of the sixteen
+tasks, including full adder, 2-bit adder, comparator, 4-to-1
+multiplexer, and 4-bit sorting network, all with exact $100\%$
+accuracy using no more than $27$ nodes. On continuous targets,
+\modnet{} achieves root-mean-square errors as low as $0.0143$ on the
+$x^2 + y^2$ surface and $0.0254$ on the multiplication task with
+only $13$ nodes. We observe that recurrence emerges spontaneously
+and scales with task complexity: XOR-2 requires one self-loop, while
+Gaussian and multiplication require $10$ to $14$ self-loops,
+indicating that temporal memory is a structural necessity, not an
+imposed design.
+
+Our results suggest that a fully layer-free architecture driven by
+a minimal evolutionary process can rediscover structural principles
+— non-linearity, recurrence, sparsity — that are typically imposed
+by human designers. We provide a complete open-source implementation
+and a reproducible benchmark suite.
+
+\vspace{1em}
+\noindent
+\textbf{Keywords:} neuroevolution, layer-free architectures,
+self-growing networks, recurrent networks, Boolean function
+learning, digital circuits, sparse connectivity.
+
+\end{abstract}
+
+% ------------------------------------------------------------
+%  Front matter
+% ------------------------------------------------------------
+\tableofcontents
+\listoffigures
+\listoftables
+
+% ============================================================
+%                       CHAPTERS
+% ============================================================
+% During writing, uncomment the line below to compile only the
+% chapters you are currently working on. This speeds up
+% compilation significantly.
+%
+% \includeonly{
+%   chapters/05_results,
+% }
+
+\include{chapters/01_introduction}
+\include{chapters/02_related_work}
+\include{chapters/03_method}
+\include{chapters/04_experiments}
+\include{chapters/05_results}
+\include{chapters/06_discussion}
+\include{chapters/07_conclusion}
+
+% ============================================================
+%                       APPENDICES
+% ============================================================
+\appendix
+\include{chapters/A_hyperparameters}
+\include{chapters/B_network_snapshots}
+\include{chapters/C_algorithm_details}
+
+
+% -------------------------------------------------------------
+%  Consolidated bibliography (replaces per-chapter bibs)
+% -------------------------------------------------------------
+\bibliographystyle{plainnat}
+\bibliography{refs_all}
+
+\end{document}

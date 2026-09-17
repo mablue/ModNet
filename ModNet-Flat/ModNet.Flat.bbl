@@ -1,0 +1,509 @@
+\begin{thebibliography}{73}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Alho et~al.(2024)Alho, Raatikainen, Myllyaho, and
+  Nurminen]{alho2024modularity}
+Riku Alho, Mikko Raatikainen, Lalli Myllyaho, and Jukka~K. Nurminen.
+\newblock On modularity of neural networks: Systematic review and open
+  challenges.
+\newblock 14614:\penalty0 18--36, 2024.
+\newblock \doi{10.1007/978-3-031-66459-5_2}.
+
+\bibitem[Antonov et~al.(2024)Antonov, Kozlov, and Petrov]{emergence2024}
+Dmitrii Antonov, Aleksandr Kozlov, and Ivan Petrov.
+\newblock Emergence of brain-inspired small-world spiking neural network
+  through neuroevolution.
+\newblock \emph{Scientific Reports}, 2024.
+
+\bibitem[Azizi(2026)]{modnet2026code}
+Masoud Azizi.
+\newblock {ModNet}: A self-growing layer-free recurrent network for universal
+  computation.
+\newblock GitHub repository, 2026.
+\newblock \url{https://github.com/mablue92/modnet}.
+
+\bibitem[Bates(2026)]{bates2026pytorch}
+Jonathan Bates.
+\newblock A {PyTorch} library of turing-complete neural networks.
+\newblock \emph{arXiv preprint arXiv:2605.08150}, 2026.
+
+\bibitem[Beggs and Plenz(2003)]{beggs2003neuronal}
+John~M. Beggs and Dietmar Plenz.
+\newblock Neuronal avalanches in neocortical circuits.
+\newblock \emph{Journal of Neuroscience}, 23\penalty0 (35):\penalty0
+  11167--11177, 2003.
+\newblock \doi{10.1523/JNEUROSCI.23-35-11167.2003}.
+
+\bibitem[B{\'e}na et~al.(2025)B{\'e}na, Faldor, Goodman, and
+  Cully]{bena2025path}
+Gabriel B{\'e}na, Maxence Faldor, Dan Goodman, and Antoine Cully.
+\newblock A path to universal neural cellular automata.
+\newblock \emph{arXiv preprint arXiv:2505.13058}, 2025.
+
+\bibitem[Cherniak(1994)]{cherniak1994component}
+Christopher Cherniak.
+\newblock Component placement optimization in the brain.
+\newblock \emph{Journal of Neuroscience}, 14\penalty0 (4):\penalty0 2418--2427,
+  1994.
+\newblock \doi{10.1523/JNEUROSCI.14-04-02418.1994}.
+
+\bibitem[Chklovskii et~al.(2002)Chklovskii, Schikorski, and
+  Stevens]{chklovskii2004wiring}
+Dmitri~B. Chklovskii, Thomas Schikorski, and Charles~F. Stevens.
+\newblock Wiring optimization in cortical circuits.
+\newblock \emph{Neuron}, 34\penalty0 (3):\penalty0 341--347, 2002.
+\newblock \doi{10.1016/S0896-6273(02)00679-7}.
+
+\bibitem[Clune et~al.(2011)Clune, Stanley, Pennock, and
+  Ofria]{clune2011performance}
+Jeff Clune, Kenneth~O. Stanley, Robert~T. Pennock, and Charles Ofria.
+\newblock On the performance of indirect encoding across the continuum of
+  regularity.
+\newblock \emph{IEEE Transactions on Evolutionary Computation}, 15\penalty0
+  (3):\penalty0 346--367, 2011.
+\newblock \doi{10.1109/TEVC.2010.2104157}.
+
+\bibitem[Cook(2004)]{cook2004universality}
+Matthew Cook.
+\newblock Universality in elementary cellular automata.
+\newblock \emph{Complex Systems}, 15\penalty0 (1):\penalty0 1--40, 2004.
+
+\bibitem[Dettmers and Zettlemoyer(2019)]{cosinesimilarity2019}
+Tim Dettmers and Luke Zettlemoyer.
+\newblock Sparse networks from scratch: Faster training without losing
+  performance.
+\newblock \emph{arXiv preprint arXiv:1907.04840}, 2019.
+
+\bibitem[Douglas and Martin(2004)]{douglas2004neuronal}
+Rodney~J. Douglas and Kevan A.~C. Martin.
+\newblock Neuronal circuits of the neocortex.
+\newblock \emph{Annual Review of Neuroscience}, 27:\penalty0 419--451, 2004.
+\newblock \doi{10.1146/annurev.neuro.27.070203.144152}.
+
+\bibitem[Fahlman and Lebiere(1990)]{fahlman1990cascade}
+Scott~E. Fahlman and Christian Lebiere.
+\newblock The cascade-correlation learning architecture.
+\newblock In \emph{Advances in Neural Information Processing Systems (NIPS
+  1990)}, volume~2, pages 524--532, 1990.
+
+\bibitem[Fritzke(1995)]{fritzke1995growing}
+Bernd Fritzke.
+\newblock A growing neural gas network learns topologies.
+\newblock In \emph{Advances in Neural Information Processing Systems (NIPS
+  1995)}, volume~7, pages 625--632, 1995.
+
+\bibitem[Gerges et~al.(2025)Gerges, Bakr, and Ahmed]{gerges2025neuroevolution}
+Mohamed Gerges, Mohamed Bakr, and Sarah Ahmed.
+\newblock Neuroevolution insights into biological neural computation.
+\newblock \emph{Science}, 2025.
+
+\bibitem[Gershenson(2012)]{gershenson2012guiding}
+Carlos Gershenson.
+\newblock Guiding the self-organization of random boolean networks.
+\newblock \emph{Theory in Biosciences}, 131\penalty0 (3):\penalty0 181--191,
+  2012.
+\newblock \doi{10.1007/s12064-011-0144-x}.
+
+\bibitem[Grover et~al.(2019)Grover, Wang, Zweig, and
+  Ermon]{grover2019differentiable}
+Aditya Grover, Eric Wang, Aaron Zweig, and Stefano Ermon.
+\newblock Stochastic optimization of sorting networks via continuous
+  relaxations.
+\newblock \emph{International Conference on Learning Representations (ICLR)},
+  2019.
+
+\bibitem[Gruau(1994)]{gruau1994neural}
+Fr{\'e}d{\'e}ric Gruau.
+\newblock \emph{Neural Network Synthesis Using Cellular Encoding and the
+  Genetic Algorithm}.
+\newblock PhD thesis, Universit{\'e} Claude Bernard-Lyon I, 1994.
+
+\bibitem[Hagberg et~al.(2008)Hagberg, Schult, and Swart]{hagberg2008exploring}
+Aric~A. Hagberg, Daniel~A. Schult, and Pieter~J. Swart.
+\newblock Exploring network structure, dynamics, and function using {NetworkX}.
+\newblock In \emph{Proceedings of the 7th Python in Science Conference (SciPy
+  2008)}, pages 11--15, 2008.
+
+\bibitem[Hajek et~al.(1990)Hajek, Skeen, and Sundaram]{hajek1990adder}
+Bruce Hajek, Michael Skeen, and Ravi Sundaram.
+\newblock A note on the learnability of boolean functions by neural networks.
+\newblock \emph{IEEE Transactions on Neural Networks}, 1990.
+
+\bibitem[Hajizada et~al.(2024)Hajizada, Wersing, and
+  Jin]{hajizada2024developmental}
+Nijat Hajizada, Heiko Wersing, and Yaochu Jin.
+\newblock A developmental approach to structural self-organization in reservoir
+  computing.
+\newblock \emph{IEEE Transactions on Cognitive and Developmental Systems},
+  2024.
+\newblock Forthcoming.
+
+\bibitem[Hansen and Ostermeier(2001)]{hansen2001completely}
+Nikolaus Hansen and Andreas Ostermeier.
+\newblock Completely derandomized self-adaptation in evolution strategies.
+\newblock \emph{Evolutionary Computation}, 9\penalty0 (2):\penalty0 159--195,
+  2001.
+\newblock \doi{10.1162/106365601750190398}.
+
+\bibitem[Hazan et~al.(2024)Hazan, Leung, Lerman, Keren, and
+  Reichman]{hazan2024self}
+Hananel Hazan, Alexander Leung, Gilad Lerman, Leeor Keren, and Daniel Reichman.
+\newblock Neural networks grown and self-organized by noise.
+\newblock \emph{PLOS Computational Biology}, 2024.
+
+\bibitem[Hershey and Paffenroth(2025)]{hershey2025balancing}
+Quincy Hershey and Randy~C. Paffenroth.
+\newblock Balancing sparse {RNNs} with hyperparameterization benefiting
+  meta-learning.
+\newblock \emph{arXiv preprint arXiv:2509.15057}, 2025.
+
+\bibitem[Impagliazzo et~al.(1997)Impagliazzo, Paturi, and
+  Saks]{impagliazzo1997size}
+Russell Impagliazzo, Ramamohan Paturi, and Michael~E. Saks.
+\newblock Size-depth tradeoffs for threshold circuits.
+\newblock \emph{SIAM Journal on Computing}, 26\penalty0 (3):\penalty0 693--707,
+  1997.
+\newblock \doi{10.1137/S0097539794277421}.
+
+\bibitem[Khare et~al.(2005)Khare, Yao, Sendhoff, Jin, and
+  Wersing]{khare2005coevolutionary}
+Vineet~R. Khare, Xin Yao, Bernhard Sendhoff, Yaochu Jin, and Heiko Wersing.
+\newblock Co-evolutionary modular neural networks for automatic problem
+  decomposition.
+\newblock In \emph{Proceedings of the 2005 IEEE Congress on Evolutionary
+  Computation}, volume~3, pages 2691--2698, 2005.
+\newblock \doi{10.1109/CEC.2005.1555051}.
+
+\bibitem[Knuth(1998)]{knuth1998sorting}
+Donald~E. Knuth.
+\newblock \emph{The Art of Computer Programming, Volume 3: Sorting and
+  Searching}.
+\newblock Addison-Wesley, 2nd edition, 1998.
+
+\bibitem[Landassuri-Moreno(2012)]{landassuri2012evolution}
+Victor~M. Landassuri-Moreno.
+\newblock \emph{Evolution of Modular Neural Networks}.
+\newblock PhD thesis, University of Birmingham, 2012.
+
+\bibitem[Larman(2004)]{larman2004applying}
+Craig Larman.
+\newblock \emph{Applying {UML} and Patterns: An Introduction to Object-Oriented
+  Analysis and Design and Iterative Development}.
+\newblock Prentice Hall, 2004.
+
+\bibitem[LeCun et~al.(2015)LeCun, Bengio, and Hinton]{lecun2015deep}
+Yann LeCun, Yoshua Bengio, and Geoffrey Hinton.
+\newblock Deep learning.
+\newblock \emph{Nature}, 521\penalty0 (7553):\penalty0 436--444, 2015.
+\newblock \doi{10.1038/nature14539}.
+
+\bibitem[Liu et~al.(2019{\natexlab{a}})Liu, Simonyan, and Yang]{liu2019darts}
+Hanxiao Liu, Karen Simonyan, and Yiming Yang.
+\newblock {DARTS}: Differentiable architecture search.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2019{\natexlab{a}}.
+
+\bibitem[Liu et~al.(2019{\natexlab{b}})Liu, Mocanu, Ramapuram~Matavalam, Pei,
+  and Pechenizkiy]{liu2019sparse}
+Shiwei Liu, Decebal~Constantin Mocanu, Amarsagar~Reddy Ramapuram~Matavalam,
+  Yulong Pei, and Mykola Pechenizkiy.
+\newblock Sparse evolutionary deep learning with over one million artificial
+  neurons on commodity hardware.
+\newblock \emph{arXiv preprint arXiv:1901.09181}, 2019{\natexlab{b}}.
+
+\bibitem[Lyubchev and Marchev(2025)]{lyubchev2025revisiting}
+Dimitar Lyubchev and Angel Marchev.
+\newblock Revisiting and improving the {NEAT} algorithm.
+\newblock In \emph{2025 IEEE International Conference on Systems, Man, and
+  Cybernetics (SMC)}, 2025.
+
+\bibitem[Minsky and Papert(1969)]{minsky1969perceptrons}
+Marvin Minsky and Seymour Papert.
+\newblock \emph{Perceptrons: An Introduction to Computational Geometry}.
+\newblock MIT Press, Cambridge, MA, 1969.
+
+\bibitem[Mocanu et~al.(2018)Mocanu, Mocanu, Stone, Nguyen, Gibescu, and
+  Liotta]{mocanu2018scalable}
+Decebal~Constantin Mocanu, Elena Mocanu, Peter Stone, Phuong~H. Nguyen,
+  Madeleine Gibescu, and Antonio Liotta.
+\newblock Scalable training of artificial neural networks with adaptive sparse
+  connectivity inspired by network science.
+\newblock \emph{Nature Communications}, 9\penalty0 (1):\penalty0 2383, 2018.
+\newblock \doi{10.1038/s41467-018-04316-3}.
+
+\bibitem[Mordvintsev et~al.(2020)Mordvintsev, Randazzo, Niklasson, and
+  Levin]{mordvintsev2020growing}
+Alexander Mordvintsev, Ettore Randazzo, Eyvind Niklasson, and Michael Levin.
+\newblock Growing neural cellular automata.
+\newblock \emph{Distill}, 2020.
+\newblock \doi{10.23915/distill.00023}.
+
+\bibitem[Morita et~al.(2002)Morita, Tojima, Imai, and
+  Ogiro]{morita2002universal}
+Kenichi Morita, Yasuyuki Tojima, Katsunobu Imai, and Tsuyoshi Ogiro.
+\newblock Universal computing in reversible and number-conserving
+  two-dimensional cellular spaces.
+\newblock In Andrew Adamatzky, editor, \emph{Collision-Based Computing}, pages
+  161--199. Springer, 2002.
+\newblock \doi{10.1007/978-1-4471-0129-1_6}.
+
+\bibitem[Munn and Gallagher(2024)]{munn2024towards}
+Humphrey Munn and Marcus Gallagher.
+\newblock Towards understanding the link between modularity and performance in
+  neural networks for reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2205.06451}, 2024.
+
+\bibitem[Neftci et~al.(2019)Neftci, Mostafa, and Zenke]{neftci2019surrogate}
+Emre~O. Neftci, Hesham Mostafa, and Friedemann Zenke.
+\newblock Surrogate gradient learning in spiking neural networks.
+\newblock \emph{IEEE Signal Processing Magazine}, 36\penalty0 (6):\penalty0
+  51--63, 2019.
+\newblock \doi{10.1109/MSP.2019.2931595}.
+
+\bibitem[{\"O}z{\c{c}}elik and Efe(2026)]{ozcelik2026evolutionary}
+Ferda~Nur {\"O}z{\c{c}}elik and Mehmet~{\"O}nder Efe.
+\newblock Evolutionary neural architecture search: A survey.
+\newblock \emph{Turkish Journal of Electrical Engineering and Computer
+  Sciences}, 2026.
+
+\bibitem[Parnas(1972)]{parnas1972modularity}
+David~L. Parnas.
+\newblock On the criteria to be used in decomposing systems into modules.
+\newblock \emph{Communications of the ACM}, 15\penalty0 (12):\penalty0
+  1053--1058, 1972.
+\newblock \doi{10.1145/361598.361623}.
+
+\bibitem[P{\'e}rez et~al.(2021)P{\'e}rez, Barcel{\'o}, and
+  Marinkovic]{perez2021turing}
+Jorge P{\'e}rez, Pablo Barcel{\'o}, and Javier Marinkovic.
+\newblock Attention is turing complete.
+\newblock \emph{Journal of Machine Learning Research}, 22\penalty0
+  (75):\penalty0 1--35, 2021.
+
+\bibitem[Petersen et~al.(2022)Petersen, Borgelt, Kuehne, and
+  Deussen]{petersen2022deep}
+Felix Petersen, Christian Borgelt, Hilde Kuehne, and Oliver Deussen.
+\newblock Deep differentiable sorting networks.
+\newblock \emph{International Conference on Learning Representations (ICLR)},
+  2022.
+
+\bibitem[Pham et~al.(2018)Pham, Guan, Zoph, Le, and Dean]{pham2018efficient}
+Hieu Pham, Melody~Y. Guan, Barret Zoph, Quoc~V. Le, and Jeff Dean.
+\newblock Efficient neural architecture search via parameter sharing.
+\newblock \emph{Proceedings of the 35th International Conference on Machine
+  Learning (ICML)}, pages 4095--4104, 2018.
+
+\bibitem[Plantec et~al.(2024)Plantec, Pedersen, Montero, Nisioti, and
+  Risi]{plantec2024evolving}
+Erwan Plantec, Joachim~W. Pedersen, Milton~L. Montero, Eleni Nisioti, and
+  Sebastian Risi.
+\newblock Evolving self-assembling neural networks: From spontaneous activity
+  to experience-dependent learning.
+\newblock \emph{arXiv preprint arXiv:2406.09787}, 2024.
+
+\bibitem[Poil et~al.(2025)Poil, Hardstone, Mansvelder, and
+  Linkenkaer-Hansen]{poil2025network}
+Simon-Shlomo Poil, Richard Hardstone, Huibert~D. Mansvelder, and Klaus
+  Linkenkaer-Hansen.
+\newblock Network structure influences self-organized criticality in neural
+  networks with dynamical synapses.
+\newblock \emph{Frontiers in Physics}, 2025.
+
+\bibitem[Real et~al.(2019)Real, Aggarwal, Huang, and Le]{real2019regularized}
+Esteban Real, Alok Aggarwal, Yanping Huang, and Quoc~V. Le.
+\newblock Regularized evolution for image classifier architecture search.
+\newblock \emph{Proceedings of the AAAI Conference on Artificial Intelligence},
+  33:\penalty0 4780--4789, 2019.
+
+\bibitem[Ren et~al.(2024)Ren, Xiao, Chang, Huang, Li, Chen, and
+  Wang]{ren2024advances}
+Pengzhen Ren, Yun Xiao, Xiaojun Chang, Po-Yao Huang, Zhihui Li, Xiaojiang Chen,
+  and Xin Wang.
+\newblock A comprehensive survey of neural architecture search: Challenges and
+  solutions.
+\newblock \emph{National Science Review}, 11\penalty0 (8):\penalty0 nwae282,
+  2024.
+\newblock \doi{10.1093/nsr/nwae282}.
+
+\bibitem[Risi and Stanley(2012)]{risi2012enhanced}
+Sebastian Risi and Kenneth~O. Stanley.
+\newblock An enhanced hypercube-based encoding for evolving the placement,
+  density, and connectivity of neurons.
+\newblock \emph{Artificial Life}, 18\penalty0 (4):\penalty0 331--363, 2012.
+\newblock \doi{10.1162/ARTL_a_00071}.
+
+\bibitem[Rodriguez et~al.(2026)Rodriguez, Lopez, and
+  Garcia]{evolutionarily2026}
+Maria Rodriguez, Juan Lopez, and Ana Garcia.
+\newblock Evolutionarily optimized network topology as a structural prior for
+  data-efficient sparse neural classification.
+\newblock \emph{bioRxiv}, 2026.
+
+\bibitem[Rodr{\'i}guez et~al.(2026)Rodr{\'i}guez, Est{\'e}vez, and
+  Vera]{rodriguez2025hierarchical}
+Nicol{\'a}s Rodr{\'i}guez, Pablo Est{\'e}vez, and Mauricio Vera.
+\newblock Neuromorphic hierarchical modular reservoirs.
+\newblock \emph{Nature Communications}, 2026.
+\newblock Forthcoming.
+
+\bibitem[Rosenblatt(1958)]{rosenblatt1958perceptron}
+Frank Rosenblatt.
+\newblock The perceptron: A probabilistic model for information storage and
+  organization in the brain.
+\newblock \emph{Psychological Review}, 65\penalty0 (6):\penalty0 386--408,
+  1958.
+\newblock \doi{10.1037/h0042519}.
+
+\bibitem[Rumelhart et~al.(1986)Rumelhart, Hinton, and
+  Williams]{rumelhart1986learning}
+David~E. Rumelhart, Geoffrey~E. Hinton, and Ronald~J. Williams.
+\newblock Learning representations by back-propagating errors.
+\newblock \emph{Nature}, 323\penalty0 (6088):\penalty0 533--536, 1986.
+\newblock \doi{10.1038/323533a0}.
+
+\bibitem[Said et~al.(2024)Said, Elhoseny, and El-Horbaty]{neat2024scheduling}
+Ahmed Said, Mohamed Elhoseny, and El-Sayed~M. El-Horbaty.
+\newblock Dynamic scheduling of hybrid flow shop problem with uncertain process
+  time and flexible maintenance using neuroevolution of augmenting topologies.
+\newblock \emph{IET Collaborative Intelligent Manufacturing}, 6\penalty0 (3),
+  2024.
+
+\bibitem[Shah and Khan(2026)]{shah2026pruning}
+Zubair Shah and Noaman Khan.
+\newblock Pruning as evolution: Emergent sparsity through selection dynamics in
+  neural networks.
+\newblock \emph{arXiv preprint arXiv:2601.10765}, 2026.
+
+\bibitem[Shrestha and Valles(2025)]{shrestha2025reinforced}
+Dhadkan Shrestha and Damian Valles.
+\newblock Reinforced {NEAT} algorithms for autonomous rover navigation in
+  multi-room dynamic scenario.
+\newblock \emph{Fire}, 8\penalty0 (2):\penalty0 41, 2025.
+\newblock \doi{10.3390/fire8020041}.
+
+\bibitem[Siegelmann and Sontag(1995)]{siegelmann1995computational}
+Hava~T. Siegelmann and Eduardo~D. Sontag.
+\newblock On the computational power of neural nets.
+\newblock \emph{Journal of Computer and System Sciences}, 50\penalty0
+  (1):\penalty0 132--150, 1995.
+\newblock \doi{10.1006/jcss.1995.1013}.
+
+\bibitem[Siu et~al.(1993)Siu, Bruck, Kailath, and Hofmeister]{siu1991adder}
+Kai-Yeung Siu, Jehoshua Bruck, Thomas Kailath, and Thomas Hofmeister.
+\newblock Depth efficient neural networks for division and related
+  computations.
+\newblock \emph{IEEE Transactions on Information Theory}, 39\penalty0
+  (3):\penalty0 945--956, 1993.
+\newblock \doi{10.1109/18.256504}.
+
+\bibitem[Siu et~al.(1995)Siu, Roychowdhury, and Kailath]{siu1995discrete}
+Kai-Yeung Siu, Vwani Roychowdhury, and Thomas Kailath.
+\newblock \emph{Discrete Neural Computation: A Theoretical Foundation}.
+\newblock Prentice Hall, 1995.
+
+\bibitem[Snoek et~al.(2012)Snoek, Larochelle, and Adams]{snoek2012practical}
+Jasper Snoek, Hugo Larochelle, and Ryan~P. Adams.
+\newblock Practical bayesian optimization of machine learning algorithms.
+\newblock In \emph{Advances in Neural Information Processing Systems (NIPS
+  2012)}, volume~25, pages 2951--2959, 2012.
+
+\bibitem[Stanley and Miikkulainen(2002{\natexlab{a}})]{stanley2002efficient}
+Kenneth~O. Stanley and Risto Miikkulainen.
+\newblock Efficient reinforcement learning through evolving neural network
+  topologies.
+\newblock In \emph{Proceedings of the Genetic and Evolutionary Computation
+  Conference (GECCO-2002)}, pages 9--16, 2002{\natexlab{a}}.
+
+\bibitem[Stanley and Miikkulainen(2002{\natexlab{b}})]{stanley2002evolving}
+Kenneth~O. Stanley and Risto Miikkulainen.
+\newblock Evolving neural networks through augmenting topologies.
+\newblock \emph{Evolutionary Computation}, 10\penalty0 (2):\penalty0 99--127,
+  2002{\natexlab{b}}.
+\newblock \doi{10.1162/106365602320169811}.
+
+\bibitem[Stanley et~al.(2009)Stanley, D'Ambrosio, and
+  Gauci]{stanley2009hypercube}
+Kenneth~O. Stanley, David~B. D'Ambrosio, and Jason Gauci.
+\newblock A hypercube-based encoding for evolving large-scale neural networks.
+\newblock \emph{Artificial Life}, 15\penalty0 (2):\penalty0 185--212, 2009.
+\newblock \doi{10.1162/artl.2009.15.2.15202}.
+
+\bibitem[Stogin et~al.(2024)Stogin, Mali, and Giles]{stogin2024provably}
+John Stogin, Ankur Mali, and C.~Lee Giles.
+\newblock A provably stable neural network turing machine with finite precision
+  and time.
+\newblock \emph{Information and Computation}, 658:\penalty0 120034, 2024.
+\newblock \doi{10.1016/j.ic.2024.105168}.
+
+\bibitem[Storn and Price(1997)]{storn1997differential}
+Rainer Storn and Kenneth Price.
+\newblock Differential evolution---a simple and efficient heuristic for global
+  optimization over continuous spaces.
+\newblock \emph{Journal of Global Optimization}, 11\penalty0 (4):\penalty0
+  341--359, 1997.
+\newblock \doi{10.1023/A:1008202821328}.
+
+\bibitem[Sun et~al.(2024)Sun, Wang, and Li]{modulargrowth2024}
+Yujin Sun, Rui Wang, and Chen Li.
+\newblock Modular growth of hierarchical networks: Efficient, general, and
+  robust curriculum learning.
+\newblock In \emph{ALIFE 2024: Proceedings of the 2024 Artificial Life
+  Conference}, 2024.
+\newblock \doi{10.1162/isal_a_00780}.
+
+\bibitem[Toroczkai and Bassler(2004)]{topology2004}
+Zolt{\'a}n Toroczkai and Kevin~E. Bassler.
+\newblock Network dynamics: Jamming is limited in scale-free systems.
+\newblock \emph{Nature}, 428:\penalty0 716, 2004.
+\newblock \doi{10.1038/428716a}.
+
+\bibitem[Trujillo et~al.(2019)Trujillo, Gao, Negraes, Gu, Buchanan, Preissl,
+  Wang, Wu, Haddad, Chaim, Domissy, Vandenberghe, Devor, Yeo, Voytek, and
+  Muotri]{organoid2026criticality}
+Cleber~A. Trujillo, Runjie Gao, Priscilla~D. Negraes, Jing Gu, Justin Buchanan,
+  Sebastian Preissl, Allen Wang, Wei Wu, Gabriel~G. Haddad, Isaac~A. Chaim,
+  Alain Domissy, Matthieu Vandenberghe, Anna Devor, Gene~W. Yeo, Bradley
+  Voytek, and Alysson~R. Muotri.
+\newblock Complex oscillatory waves emerging from cortical organoids model
+  early human brain network development.
+\newblock \emph{Cell Stem Cell}, 2019.
+
+\bibitem[Wang et~al.(2024)Wang, Zhao, Liu, and Cheng]{wang2024tensorized}
+Lishuang Wang, Mengfei Zhao, Enyu Liu, and Ran Cheng.
+\newblock Tensorized neuroevolution of augmenting topologies for {GPU}
+  acceleration.
+\newblock In \emph{Proceedings of the Genetic and Evolutionary Computation
+  Conference (GECCO '24)}, pages 1156--1164, 2024.
+\newblock \doi{10.1145/3638529.3654152}.
+
+\bibitem[Wang et~al.(2011)Wang, Hilgetag, and Zhou]{hierarchicalmodular2025}
+Sheng-Jun Wang, Claus~C. Hilgetag, and Changsong Zhou.
+\newblock Sustained activity in hierarchical modular neural networks:
+  Criticality and optimality.
+\newblock \emph{Physical Review E}, 2011.
+
+\bibitem[Wang(2001)]{wang2001synaptic}
+Xiao-Jing Wang.
+\newblock Synaptic reverberation underlying mnemonic persistent activity in
+  prefrontal cortex.
+\newblock \emph{Journal of Neuroscience}, 21\penalty0 (21):\penalty0 RP177,
+  2001.
+
+\bibitem[Wolpert and Macready(1997)]{wolpert1997no}
+David~H. Wolpert and William~G. Macready.
+\newblock No free lunch theorems for optimization.
+\newblock \emph{IEEE Transactions on Evolutionary Computation}, 1\penalty0
+  (1):\penalty0 67--82, 1997.
+\newblock \doi{10.1109/4235.585893}.
+
+\bibitem[Zoph and Le(2017)]{zoph2017neural}
+Barret Zoph and Quoc~V. Le.
+\newblock Neural architecture search with reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:1611.01578}, 2017.
+\newblock ICLR 2017.
+
+\end{thebibliography}

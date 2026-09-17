@@ -1,0 +1,24 @@
+\chapter{Algorithm Details}
+\label{app:algorithm}
+
+\begin{algorithm}[h]
+  \caption{ModNet Evolution (full detail)}
+  \label{alg:app-evolution}
+  \begin{algorithmic}[1]
+    \State Initialize population $\mathcal{P}$ with $P$ random networks
+    \State Evaluate fitness for all networks
+    \For{$g = 1, 2, \ldots, G$}
+      \State Sort $\mathcal{P}$ by fitness
+      \State $\mathcal{E} \gets$ top $\lfloor P/5 \rfloor$ networks
+      \State Apply crossover, mutation, and fresh injection
+      \If{$g \bmod g_{\text{birth}} = 0$}
+        \State Apply \textsc{Birth} to top 3 networks
+      \EndIf
+      \If{$g \bmod g_{\text{prune}} = 0$}
+        \State Apply \textsc{Prune} to elite networks
+      \EndIf
+    \EndFor
+    \State \Return best network
+  \end{algorithmic}
+\end{algorithm}
+

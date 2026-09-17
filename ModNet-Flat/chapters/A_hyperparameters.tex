@@ -1,0 +1,35 @@
+\chapter{Hyperparameter Summary}
+\label{app:hyperparameters}
+
+Table~\ref{tab:app-all-hyperparameters} lists all hyperparameters
+used in the experiments reported in this thesis.
+
+\begin{table}[h]
+  \centering
+  \small
+  \caption{Complete list of hyperparameters for \modnet{}.}
+  \label{tab:app-all-hyperparameters}
+  \begin{tabular}{lll}
+    \toprule
+    \textbf{Parameter} & \textbf{Description} & \textbf{Value} \\
+    \midrule
+    $P$                & Population size              & 300 \\
+    $G$                & Maximum generations          & 400--1500 \\
+    $p_{\text{cross}}$ & Crossover rate               & 0.30 \\
+    $p_{\text{fresh}}$ & Fresh random rate            & 0.05 \\
+    $\sigma_{\text{base}}$ & Base mutation scale      & 0.30 \\
+    $\sigma_{\max}$    & Maximum mutation scale       & 1.50 \\
+    $\gamma$           & Mutation growth factor       & 1.25 \\
+    $g_{\text{thresh}}$& Plateau threshold            & 25 \\
+    $g_{\text{birth}}$ & Birth interval               & 100 \\
+    $g_{\text{prune}}$ & Prune interval               & 20 \\
+    $\epsilon_{\text{prune}}$ & Prune tolerance       & $-0.001$ \\
+    $w_{\text{thresh}}$& Weight pruning threshold     & 0.04 \\
+    $\alpha_{\text{lo}}$& Lower activity threshold    & 0.02 \\
+    $\alpha_{\text{hi}}$& Upper activity threshold    & 0.98 \\
+    $n_{\text{hidden,min}}$& Minimum hidden nodes    & 2 \\
+    $n_{\max}$         & Maximum nodes                & 60 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+

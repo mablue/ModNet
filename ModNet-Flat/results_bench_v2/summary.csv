@@ -1,0 +1,17 @@
+problem,desc,kind,n_in,n_out,best_fit,rmse,accuracy,size,rec,wires,time,gens_run,status
+xor2,2-bit XOR,boolean,2,1,-0.000000,0.000000,1.0000,8,1,17,1.0,43,SOLVED
+xor3,3-bit XOR,boolean,3,1,-0.000000,0.000000,1.0000,9,6,46,2.3,130,SOLVED
+parity4,Parity-4,boolean,4,1,-0.000000,0.000000,1.0000,10,5,42,2.1,99,SOLVED
+parity6,Parity-6,boolean,6,1,-0.046875,0.216506,0.9531,8,5,41,48.5,1499,PARTIAL
+majority3,Majority of 3,boolean,3,1,-0.000000,0.000000,1.0000,26,2,76,1.1,44,SOLVED
+majority5,Majority of 5,boolean,5,1,-0.000000,0.000000,1.0000,26,9,201,12.1,291,SOLVED
+full_adder,"Full Adder (sum, carry)",boolean,3,2,-0.000000,0.000000,1.0000,26,5,132,3.9,156,SOLVED
+adder2bit,"2-bit Adder (s0, s1, cout)",boolean,4,3,-0.000000,0.000000,1.0000,26,6,192,11.7,350,SOLVED
+comparator,"Comparator (gt, eq, lt)",boolean,2,3,-0.000000,0.000000,1.0000,27,6,168,6.1,251,SOLVED
+mux4to1,4-to-1 MUX,boolean,6,1,-0.000000,0.000000,1.0000,26,4,117,6.8,118,SOLVED
+sort4,4-bit Sorting Network,boolean,4,4,-0.000000,0.000000,1.0000,26,6,219,14.0,417,SOLVED
+sin2pi,sin(2πx),regression,4,8,-0.002159,0.046460,,18,12,175,46.8,1499,SOLVED
+sin4pi,sin(4πx),regression,4,8,-0.006233,0.078949,,13,11,126,40.1,1499,PARTIAL
+circle,x² + y²,regression,8,8,-0.000204,0.014295,,26,12,262,31.7,862,SOLVED
+gaussian,Gaussian exp(-x²),regression,4,8,-0.000756,0.027495,,27,14,357,57.7,1499,SOLVED
+multiply,x · y,regression,8,8,-0.000645,0.025393,,13,10,129,41.3,1499,SOLVED
